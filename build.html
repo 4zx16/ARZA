@@ -20,12 +20,10 @@
       <a href="about.html">About</a>
     </nav>
   </header>
-
   <section class="hero">
     <h1>Build Your Own Beast</h1>
     <p>Type exactly what you want — we’ll assemble and optimize it.</p>
   </section>
-
   <section class="form">
     <form id="buildForm">
       <label>Type:
@@ -34,52 +32,24 @@
           <option value="Laptop">Laptop</option>
         </select>
       </label><br/>
-
       <label>CPU:
         <input type="text" name="cpu" placeholder="e.g. Intel Core i7-14700K" required>
       </label><br/>
-
       <label>GPU:
         <input type="text" name="gpu" placeholder="e.g. NVIDIA RTX 4080 Super" required>
       </label><br/>
-
       <label>RAM:
         <input type="text" name="ram" placeholder="e.g. 64GB DDR5-6000" required>
       </label><br/>
-
       <label>Operating System:
         <input type="text" name="os" placeholder="e.g. Windows 11 Pro or Linux Mint" required>
       </label><br/>
-
       <button type="submit" class="cta">Submit Build</button>
     </form>
   </section>
-
   <footer>
     <p>&copy; 2025 ARZA Inc. All rights reserved.</p>
   </footer>
-
-  <script>
-    document.getElementById('buildForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      const form = e.target;
-      const type = form.type.value;
-      const cpu = form.cpu.value.trim();
-      const gpu = form.gpu.value.trim();
-      const ram = form.ram.value.trim();
-      const os = form.os.value.trim();
-
-      const subject = encodeURIComponent("Custom Build Request – " + type);
-      const body = encodeURIComponent(
-        `Hello ARZA,\n\nI'd like to request a custom ${type} build with the following specs:\n\n` +
-        `CPU: ${cpu}\nGPU: ${gpu}\nRAM: ${ram}\nOS: ${os}\n\n` +
-        `Please contact me with a quote or next steps.\n\nThanks.`
-      );
-
-      const mailtoLink = `mailto:support@arza.tech?subject=${subject}&body=${body}`;
-      window.location.href = mailtoLink;
-    });
-  </script>
+<script src="websitestuff.js"></script>
 </body>
 </html>
