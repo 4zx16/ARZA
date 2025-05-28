@@ -6,6 +6,7 @@
     "image": "phantom.jpg",
     "desc": "A balanced powerhouse built for gamers and creators. Handles AAA gaming and multi-app workflows with ease.",
     "type": "desktop"
+    "tier": "mid"
   },
   "titan": {
     "name": "ARZA Titan X",
@@ -14,6 +15,7 @@
     "image": "titan.jpg",
     "desc": "Maxed out with flagship components. Perfect for 4K gaming, AI, and high-performance dev work.",
     "type": "desktop"
+    "tier": "high"
   },
   "nova": {
     "name": "ARZA Nova",
@@ -22,5 +24,6 @@
     "image": "nova.jpg",
     "desc": "Reliable high-performance system with elite multitasking capability. Ideal for creatives and engineers.",
     "type": "desktop"
+    "tier": "high"
   }
 }
