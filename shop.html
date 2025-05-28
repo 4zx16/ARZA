@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="referrer" content="no-referrer" />
   <title>ARZA Shop | Elite Desktops & Laptops</title>
   <link rel="stylesheet" href="styles.css" />
-  <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/1160008247755948164/1377147823530704896/tG_JYV9N_400x400.png?ex=6837e85b&is=683696db&hm=a3775f237f480ee4ba570ea31d80aeda47dd89186f78a42b95aeb81b1bb6c9d4&">
+  <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/1160008247755948164/1377147823530704896/tG_JYV9N_400x400.png?ex=6837e85b&is=683696db&hm=a3775f237f480ee4ba570ea31d80aeda47dd89186f78a42b95aeb81b1bb6c9d4&" />
 </head>
 <body>
   <header>
@@ -19,21 +19,18 @@
       <a href="about.html">About</a>
     </nav>
   </header>
-
   <section class="page-hero">
     <h1>Find Your Perfect Rig</h1>
     <p>Take the quiz below to filter ARZA systems by power, portability, and price.</p>
     <button id="quizToggle">Toggle Quiz</button>
   </section>
-
   <section id="quizWrapper">
     <form id="pcFilterForm">
-
       <div class="question">
         <label>1. What will you primarily use your PC for?</label>
-        <select name="use_case">
+        <select name="use_case" required>
           <option value="">Select</option>
-          <option value="gaming">High-performance gaming</option>
+          <option value="gaming">Gaming</option>
           <option value="school">Office or schoolwork</option>
           <option value="creative">Creative work (3D, video, design)</option>
           <option value="dev">Programming / engineering / AI</option>
@@ -41,90 +38,85 @@
           <option value="music">Music / audio production</option>
         </select>
       </div>
-
- <div class="question">
-  <label>2. What type of PC do you want?</label>
-  <select name="portability">
-    <option value="">Select</option>
-    <option value="laptop">Laptop</option>
-    <option value="desktop">Desktop</option>
-  </select>
-</div>
-
-
       <div class="question">
-        <label>5. What ARZA tier are you aiming for?</label>
-        <select name="tier">
+        <label>2. What type of PC do you want?</label>
+        <select name="portability" required>
           <option value="">Select</option>
-          <option value="low">Low-End</option>
-          <option value="mid">Mid-End</option>
-          <option value="high">High-End</option>
+          <option value="laptop">Laptop</option>
+          <option value="desktop">Desktop</option>
         </select>
       </div>
     </form>
-
     <div id="filterButtons">
-      <button id="applyFilters">Apply Filters</button>
-      <button id="clearFilters">Clear Filters</button>
+      <button id="applyFilters" type="button">Apply Filters</button>
+      <button id="clearFilters" type="button">Clear Filters</button>
     </div>
   </section>
-<!-- Updated products with correct data-portable -->
-<section class="product-grid">
-  <div class="product" data-tier="high" data-type="desktop" data-gpu="dGPU" data-ram="64" data-price="4999" data-use="gaming,dev" data-portable="desktop">
-    <h3>ARZA Titan X</h3>
-    <p>Intel i9 • RTX 4090 • 64GB DDR5</p>
-    <span>$4,999</span>
-  </div>
+  <section class="product-grid">
+    <div class="product" data-tier="high" data-type="desktop" data-gpu="dGPU" data-ram="64" data-price="4999" data-use="gaming,dev" data-portable="desktop">
+      <h3>ARZA Titan X</h3>
+      <p>Intel i9 • RTX 4090 • 64GB DDR5</p>
+      <span>$4,999</span>
+    </div>
+    <div class="product" data-tier="mid" data-type="desktop" data-gpu="dGPU" data-ram="32" data-price="3799" data-use="gaming,creative" data-portable="desktop">
+      <h3>ARZA Nova</h3>
+      <p>Ryzen 9 • RTX 4080 • 32GB DDR5</p>
+      <span>$3,799</span>
+    </div>
+    <div class="product" data-tier="mid" data-type="desktop" data-gpu="dGPU" data-ram="32" data-price="2899" data-use="gaming,creative" data-portable="desktop">
+      <h3>ARZA Phantom</h3>
+      <p>Ryzen 7 • RTX 4070 Ti • 32GB DDR5</p>
+      <span>$2,899</span>
+    </div>
+  </section>
+  <script>
+    const quizToggle = document.getElementById('quizToggle');
+    const quizWrapper = document.getElementById('quizWrapper');
+    const applyBtn = document.getElementById('applyFilters');
+    const clearBtn = document.getElementById('clearFilters');
+    const products = document.querySelectorAll('.product');
 
-  <div class="product" data-tier="mid" data-type="desktop" data-gpu="dGPU" data-ram="32" data-price="3799" data-use="gaming,creative" data-portable="desktop">
-    <h3>ARZA Nova</h3>
-    <p>Ryzen 9 • RTX 4080 • 32GB DDR5</p>
-    <span>$3,799</span>
-  </div>
-
-  <div class="product" data-tier="mid" data-type="desktop" data-gpu="dGPU" data-ram="32" data-price="2899" data-use="gaming,creative" data-portable="desktop">
-    <h3>ARZA Phantom</h3>
-    <p>Ryzen 7 • RTX 4070 Ti • 32GB DDR5</p>
-    <span>$2,899</span>
-  </div>
-</section>
-
-<script>
-  const quizToggle = document.getElementById('quizToggle');
-  const quizWrapper = document.getElementById('quizWrapper');
-  const applyBtn = document.getElementById('applyFilters');
-  const clearBtn = document.getElementById('clearFilters');
-  const products = document.querySelectorAll('.product');
-
-  quizToggle.addEventListener('click', () => {
-    quizWrapper.classList.toggle('collapsed');
-  });
-
-  applyBtn.addEventListener('click', () => {
-    const form = document.forms['pcFilterForm'];
-    const use = form['use_case'].value;
-    const portability = form['portability'].value;
-    const tier = form['tier'].value;
-
-    products.forEach(product => {
-      const prodUse = product.dataset.use.split(',');
-      const prodPortable = product.dataset.portable; // 'desktop' or 'laptop'
-      const prodTier = product.dataset.tier;
-
-      const matchesUse = use ? prodUse.includes(use) : true;
-      const matchesPortable = portability ? prodPortable === portability : true;
-      const matchesTier = tier ? prodTier === tier : true;
-
-      if (matchesUse && matchesPortable && matchesTier) {
-        product.classList.remove('hidden');
-      } else {
-        product.classList.add('hidden');
-      }
+    quizToggle.addEventListener('click', () => {
+      quizWrapper.classList.toggle('collapsed');
     });
-  });
+    // Map use_case to tier automatically
+    const usageToTier = {
+      gaming: 'mid',
+      school: 'low',
+      creative: 'high',
+      dev: 'mid',
+      general: 'low',
+      music: 'mid'
+    };
 
-  clearBtn.addEventListener('click', () => {
-    document.getElementById('pcFilterForm').reset();
-    products.forEach(product => product.classList.remove('hidden'));
-  });
-</script>
+    applyBtn.addEventListener('click', () => {
+      const form = document.forms['pcFilterForm'];
+      const use = form['use_case'].value;
+      const portability = form['portability'].value;
+
+      // Auto-assign tier based on usage
+      const tier = usageToTier[use] || '';
+
+      products.forEach(product => {
+        const prodUse = product.dataset.use.split(',');
+        const prodPortable = product.dataset.portable;
+        const prodTier = product.dataset.tier;
+
+        const matchesUse = use ? prodUse.includes(use) : true;
+        const matchesPortable = portability ? prodPortable === portability : true;
+        const matchesTier = tier ? prodTier === tier : true;
+
+        if (matchesUse && matchesPortable && matchesTier) {
+          product.classList.remove('hidden');
+        } else {
+          product.classList.add('hidden');
+        }
+      });
+    });
+    clearBtn.addEventListener('click', () => {
+      document.getElementById('pcFilterForm').reset();
+      products.forEach(product => product.classList.remove('hidden'));
+    });
+  </script>
+</body>
+</html>
