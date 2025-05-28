@@ -1,41 +1,93 @@
-<!-- product.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARZA Product Details</title>
+  <link rel="stylesheet" href="styles.css">
+  <meta name="description" content="Detailed specs, pricing, and info about ARZA's custom-built PCs. Find the perfect desktop or laptop for gaming, dev, creative, and more.">
+</head>
 <body>
-  <div id="productDetails"></div>
+  <header>
+    <div class="logo">ARZA</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="build.html">Build</a>
+      <a href="support.html">Support</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <main id="productDetails" class="product-detail"></main>
+
+  <section id="relatedProducts" class="related"></section>
 
   <script>
     const params = new URLSearchParams(window.location.search);
     const id = params.get('id');
 
-    const productData = {
+    const products = {
       phantom: {
         name: 'ARZA Phantom',
-        specs: 'Ryzen 7 • RTX 4070 Ti • 32GB DDR5 • 2TB SSD',
+        specs: ['Ryzen 7 7700X', 'RTX 4070 Ti', '32GB DDR5', '2TB NVMe SSD'],
         price: '$2,899',
-        img: 'phantom.jpg',
-        description: 'A mid-tier powerhouse for creators and gamers.'
+        image: 'https://example.com/images/phantom.jpg',
+        desc: 'A balanced powerhouse built for gamers and creators. Handles AAA gaming and multi-app workflows with ease.',
+        type: 'desktop'
       },
       titan: {
         name: 'ARZA Titan X',
-        specs: 'Intel i9 • RTX 4090 • 64GB DDR5 • 4TB SSD',
+        specs: ['Intel i9-14900K', 'RTX 4090', '64GB DDR5', '4TB NVMe SSD'],
         price: '$4,999',
-        img: 'titan.jpg',
-        description: 'An elite beast for the serious performance junkie.'
+        image: 'https://example.com/images/titan.jpg',
+        desc: 'Maxed out with flagship components. Perfect for 4K gaming, AI, and high-performance dev work.',
+        type: 'desktop'
+      },
+      nova: {
+        name: 'ARZA Nova',
+        specs: ['Ryzen 9 7900X', 'RTX 4080', '32GB DDR5', '2TB NVMe SSD'],
+        price: '$3,799',
+        image: 'https://example.com/images/nova.jpg',
+        desc: 'Reliable high-performance system with elite multitasking capability. Ideal for creatives and engineers.',
+        type: 'desktop'
       }
     };
 
-    const product = productData[id];
+    const product = products[id];
 
     if (product) {
+      const specsList = product.specs.map(s => `<li>${s}</li>`).join('');
       document.getElementById('productDetails').innerHTML = `
-        <h1>${product.name}</h1>
-        <img src="${product.img}" alt="${product.name}">
-        <p><strong>Specs:</strong> ${product.specs}</p>
-        <p><strong>Description:</strong> ${product.description}</p>
-        <p><strong>Price:</strong> ${product.price}</p>
-        <button>Add to Cart</button>
+        <div class="product-card">
+          <img src="${product.image}" alt="${product.name}" class="product-image">
+          <div class="product-info">
+            <h1>${product.name}</h1>
+            <p class="desc">${product.desc}</p>
+            <ul class="specs">${specsList}</ul>
+            <p class="price">${product.price}</p>
+            <button class="buy-btn">Add to Cart</button>
+          </div>
+        </div>
+      `;
+
+      const related = Object.entries(products)
+        .filter(([key, p]) => key !== id && p.type === product.type)
+        .map(([key, p]) => `
+          <div class="related-item" onclick="location.href='product.html?id=${key}'">
+            <img src="${p.image}" alt="${p.name}">
+            <h4>${p.name}</h4>
+            <span>${p.price}</span>
+          </div>
+        `).join('');
+
+      document.getElementById('relatedProducts').innerHTML = `
+        <h2>Related Products</h2>
+        <div class="related-grid">${related}</div>
       `;
     } else {
-      document.getElementById('productDetails').innerHTML = `<p>Product not found.</p>`;
+      document.getElementById('productDetails').innerHTML = '<p>Product not found.</p>';
     }
   </script>
 </body>
+</html>
