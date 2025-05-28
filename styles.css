@@ -219,6 +219,14 @@ button {
   color: var(--text);
 }
 
+.product {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.product:hover {
+  transform: scale(1.02);
+}
+
 .hidden {
   display: none !important;
 }
