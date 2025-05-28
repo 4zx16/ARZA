@@ -1,114 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="styles.css">
-  <title>Shop at ARZA</title>
 <header>
   <div class="logo">
-    <a href="index.html">ARZA</a>
+  <link rel="stylesheet" href="styles.css">
+  <h1>ARZA</h1>
   </div>
-  <nav>
+  <nav class="main-nav">
+    <a href="index.html">Home</a>
     <a href="shop.html">Shop</a>
     <a href="support.html">Support</a>
     <a href="about.html">About</a>
   </nav>
+  <div class="header-actions">
+    <a href="cart.html" class="icon-link" title="Cart">🛒</a>
+    <a href="account.html" class="icon-link" title="Account">👤</a>
+  </div>
 </header>
-  <style>
-    body {
-      font-family: sans-serif;
-      background: #111;
-      color: #eee;
-      padding: 2rem;
-    }
+ <style>
+  :root {
+    --bg: #0d0d0d;
+    --fg: #f0f0f0;
+    --accent: #00ff99;
+    --border: #2a2a2a;
+    --card: #1a1a1a;
+    --hover: #2c2c2c;
+    --font: 'Segoe UI', 'Inter', sans-serif;
+  }
 
-    h2 {
-      margin-bottom: 1rem;
-    }
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--fg);
+    padding: 2rem;
+    margin: 0;
+    line-height: 1.6;
+  }
 
-    .question, .product {
-      margin-bottom: 1.5rem;
-    }
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    color: #fff;
+  }
 
-    label, select {
-      display: block;
-      margin-bottom: 0.5rem;
-    }
+  .question, .product {
+    margin-bottom: 2rem;
+  }
 
-    select, button {
-      padding: 0.5rem;
-      font-size: 1rem;
-      cursor: pointer;
-    }
+  label {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    display: block;
+  }
 
-    .product {
-      border: 1px solid #333;
-      padding: 1rem;
-      border-radius: 8px;
-      background: #222;
-      transition: opacity 0.3s ease;
-    }
+  select, button {
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--fg);
+    transition: background 0.2s ease, border 0.2s ease;
+  }
 
-    .hidden {
-      display: none !important;
-    }
+  select:focus, button:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
 
-    #quizToggle {
-      margin-bottom: 1rem;
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
-      background: #333;
-      border: none;
-      color: #eee;
-      cursor: pointer;
-      border-radius: 4px;
-      user-select: none;
-    }
+  button {
+    background: var(--accent);
+    color: #000;
+    font-weight: 600;
+    cursor: pointer;
+  }
 
-    #quizToggle:hover {
-      background: #444;
-    }
+  button:hover {
+    background: #33ffbb;
+  }
 
-    #quizWrapper {
-      margin-bottom: 2rem;
-      border: 1px solid #333;
-      background: #1a1a1a;
-      border-radius: 8px;
-      overflow: hidden;
-      transition: max-height 0.4s ease, padding 0.4s ease;
-      max-height: 1000px;
-      padding: 1rem;
-    }
+  .product {
+    border: 1px solid var(--border);
+    padding: 1.25rem;
+    border-radius: 10px;
+    background: var(--card);
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+  }
 
-    /* Collapsed quiz */
-    #quizWrapper.collapsed {
-      max-height: 0;
-      padding-top: 0;
-      padding-bottom: 0;
-      border: 0;
-    }
+  .product:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 255, 153, 0.1);
+  }
 
-    #filterButtons {
-      margin-top: 1rem;
-    }
+  .product h3 {
+    color: #fff;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
 
-    #filterButtons button {
-      margin-right: 1rem;
-      background: #444;
-      border: none;
-      color: #eee;
-      padding: 0.5rem 1rem;
-      border-radius: 4px;
-      font-weight: 600;
-      user-select: none;
-      transition: background 0.3s ease;
-    }
+  .product p {
+    font-size: 0.95rem;
+    margin-bottom: 0.25rem;
+    color: #ccc;
+  }
 
-    #filterButtons button:hover {
-      background: #555;
-    }
-  </style>
+  .product span {
+    font-weight: bold;
+    color: var(--accent);
+    font-size: 1.05rem;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  #quizToggle {
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+    background: var(--card);
+    color: var(--fg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.2s ease;
+  }
+
+  #quizToggle:hover {
+    background: var(--hover);
+  }
+
+  #quizWrapper {
+    margin-bottom: 2rem;
+    border: 1px solid var(--border);
+    background: var(--card);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.4s ease;
+    max-height: 1000px;
+    padding: 1.5rem;
+  }
+
+  #quizWrapper.collapsed {
+    max-height: 0;
+    padding: 0;
+    border: none;
+  }
+
+  #filterButtons {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  #filterButtons button {
+    background: var(--hover);
+    color: var(--fg);
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 1.2rem;
+    font-weight: 600;
+    transition: background 0.3s ease;
+  }
+
+  #filterButtons button:hover {
+    background: var(--accent);
+    color: #000;
+  }
+
+  /* Smooth transitions */
+  html {
+    scroll-behavior: smooth;
+  }
+</style>
 </head>
 <body>
 
