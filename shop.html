@@ -1,298 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
-<header>
-  <div class="logo">
-  <link rel="stylesheet" href="styles.css">
-  <h1>ARZA</h1>
-  </div>
-  <nav class="main-nav">
-    <a href="index.html">Home</a>
-    <a href="shop.html">Shop</a>
-    <a href="support.html">Support</a>
-    <a href="about.html">About</a>
-  </nav>
-  <div class="header-actions">
-    <a href="cart.html" class="icon-link" title="Cart">🛒</a>
-    <a href="account.html" class="icon-link" title="Account">👤</a>
-  </div>
-</header>
- <style>
-  :root {
-    --bg: #0d0d0d;
-    --fg: #f0f0f0;
-    --accent: #00ff99;
-    --border: #2a2a2a;
-    --card: #1a1a1a;
-    --hover: #2c2c2c;
-    --font: 'Segoe UI', 'Inter', sans-serif;
-  }
-
-  body {
-    font-family: var(--font);
-    background: var(--bg);
-    color: var(--fg);
-    padding: 2rem;
-    margin: 0;
-    line-height: 1.6;
-  }
-
-  h2 {
-    font-size: 1.5rem;
-    margin-bottom: 0.75rem;
-    font-weight: 600;
-    color: #fff;
-  }
-
-  .question, .product {
-    margin-bottom: 2rem;
-  }
-
-  label {
-    font-weight: 500;
-    margin-bottom: 0.25rem;
-    display: block;
-  }
-
-  select, button {
-    padding: 0.6rem 1rem;
-    font-size: 1rem;
-    border-radius: 6px;
-    border: 1px solid var(--border);
-    background: var(--card);
-    color: var(--fg);
-    transition: background 0.2s ease, border 0.2s ease;
-  }
-
-  select:focus, button:focus {
-    outline: none;
-    border-color: var(--accent);
-  }
-
-  button {
-    background: var(--accent);
-    color: #000;
-    font-weight: 600;
-    cursor: pointer;
-  }
-
-  button:hover {
-    background: #33ffbb;
-  }
-
-  .product {
-    border: 1px solid var(--border);
-    padding: 1.25rem;
-    border-radius: 10px;
-    background: var(--card);
-    transition: transform 0.2s ease, box-shadow 0.3s ease;
-  }
-
-  .product:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(0, 255, 153, 0.1);
-  }
-
-  .product h3 {
-    color: #fff;
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .product p {
-    font-size: 0.95rem;
-    margin-bottom: 0.25rem;
-    color: #ccc;
-  }
-
-  .product span {
-    font-weight: bold;
-    color: var(--accent);
-    font-size: 1.05rem;
-  }
-
-  .hidden {
-    display: none !important;
-  }
-
-  #quizToggle {
-    margin-bottom: 1rem;
-    padding: 0.5rem 1rem;
-    background: var(--card);
-    color: var(--fg);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background 0.2s ease;
-  }
-
-  #quizToggle:hover {
-    background: var(--hover);
-  }
-
-  #quizWrapper {
-    margin-bottom: 2rem;
-    border: 1px solid var(--border);
-    background: var(--card);
-    border-radius: 10px;
-    overflow: hidden;
-    transition: max-height 0.4s ease, padding 0.4s ease;
-    max-height: 1000px;
-    padding: 1.5rem;
-  }
-
-  #quizWrapper.collapsed {
-    max-height: 0;
-    padding: 0;
-    border: none;
-  }
-
-  #filterButtons {
-    margin-top: 1.5rem;
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-
-  #filterButtons button {
-    background: var(--hover);
-    color: var(--fg);
-    border: none;
-    border-radius: 6px;
-    padding: 0.5rem 1.2rem;
-    font-weight: 600;
-    transition: background 0.3s ease;
-  }
-
-  #filterButtons button:hover {
-    background: var(--accent);
-    color: #000;
-  }
-
-  /* Smooth transitions */
-  html {
-    scroll-behavior: smooth;
-  }
-</style>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ARZA Shop | Elite Desktops & Laptops</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <header>
+    <div class="logo">ARZA</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="shop.html" class="active">Shop</a>
+      <a href="build.html">Build</a>
+      <a href="support.html">Support</a>
+      <a href="about.html">About</a>
+      <a href="quiz.html">Quiz</a>
+    </nav>
+  </header>
 
-  <button id="quizToggle">🔽 Hide Quiz</button>
+  <section class="page-hero">
+    <h1>Find Your Perfect Rig</h1>
+    <p>Take the quiz below to filter ARZA systems by power, portability, and price.</p>
+    <button id="quizToggle">Toggle Quiz</button>
+  </section>
 
-  <div id="quizWrapper">
-    <form id="pcQuiz">
-      <h2>🧠 What Do You Need Your PC For?</h2>
+  <section id="quizWrapper">
+    <form id="pcFilterForm">
 
       <div class="question">
-        <label>Use case:</label>
-        <select name="use" required>
-          <option value="gaming">Gaming</option>
-          <option value="school">School/Work</option>
-          <option value="creative">Creative</option>
-          <option value="dev">Dev/Data/Engineering</option>
-          <option value="general">General Use</option>
-          <option value="audio">Audio</option>
+        <label>1. What will you primarily use your PC for?</label>
+        <select name="use_case">
+          <option value="">Select</option>
+          <option value="gaming">High-performance gaming</option>
+          <option value="school">Office or schoolwork</option>
+          <option value="creative">Creative work (3D, video, design)</option>
+          <option value="dev">Programming / engineering / AI</option>
+          <option value="general">General use (browsing, YouTube)</option>
+          <option value="music">Music / audio production</option>
         </select>
       </div>
 
       <div class="question">
-        <label>How much do you multitask?</label>
-        <select name="multitask" required>
-          <option value="light">Light (4GB)</option>
-          <option value="medium">Medium (8GB)</option>
-          <option value="heavy">Heavy (16GB+)</option>
+        <label>2. Do you need your PC to be portable?</label>
+        <select name="portability">
+          <option value="">Select</option>
+          <option value="yes">Yes</option>
+          <option value="maybe">Somewhat</option>
+          <option value="no">Not really</option>
         </select>
       </div>
 
       <div class="question">
-        <label>Preferred ARZA Tier:</label>
-        <select name="tier" required>
-          <option value="low">Low-end</option>
-          <option value="mid">Mid-end</option>
-          <option value="high">High-end</option>
+        <label>3. How powerful does your PC need to be?</label>
+        <select name="power">
+          <option value="">Select</option>
+          <option value="extreme">Extremely powerful</option>
+          <option value="moderate">Moderate</option>
+          <option value="light">Light</option>
         </select>
       </div>
 
-      <div id="filterButtons">
-        <button type="submit">Filter Products</button>
-        <button type="button" id="clearFilters">Clear Filters</button>
+      <div class="question">
+        <label>4. How much RAM do you think you need?</label>
+        <select name="ram">
+          <option value="">Select</option>
+          <option value="4">4GB</option>
+          <option value="8">8GB</option>
+          <option value="16">16GB</option>
+          <option value="32">32GB</option>
+          <option value="64">64GB+</option>
+        </select>
+      </div>
+
+      <div class="question">
+        <label>5. What ARZA tier are you aiming for?</label>
+        <select name="tier">
+          <option value="">Select</option>
+          <option value="low">Low-End</option>
+          <option value="mid">Mid-End</option>
+          <option value="high">High-End</option>
+        </select>
       </div>
     </form>
-  </div>
 
-  <h2>🔥 Recommended PCs</h2>
-  <section id="products">
-    <div class="product" data-tier="high" data-gpu="dedicated" data-ram="64">
-      <h2>ARZA Titan X</h2>
-      <p>Intel i9 • RTX 4090 • 64GB DDR5</p>
-      <span>$4,999</span>
-    </div>
-    <div class="product" data-tier="mid" data-gpu="dedicated" data-ram="32">
-      <h2>ARZA Nova</h2>
-      <p>Ryzen 9 • RTX 4080 • 32GB DDR5</p>
-      <span>$3,799</span>
-    </div>
-    <div class="product" data-tier="mid" data-gpu="dedicated" data-ram="32">
-      <h2>ARZA Phantom</h2>
-      <p>Ryzen 7 • RTX 4070 Ti • 32GB DDR5</p>
-      <span>$2,899</span>
-    </div>
-    <div class="product" data-tier="low" data-gpu="integrated" data-ram="8">
-      <h2>ARZA LiteBook</h2>
-      <p>Intel i5 • Iris Xe • 8GB DDR4</p>
-      <span>$899</span>
+    <div id="filterButtons">
+      <button id="applyFilters">Apply Filters</button>
+      <button id="clearFilters">Clear Filters</button>
     </div>
   </section>
 
+  <section class="product-grid">
+    <div class="product" data-tier="high" data-type="desktop" data-gpu="dGPU" data-ram="64" data-price="4999" data-use="gaming,dev" data-portable="no">
+      <h3>ARZA Titan X</h3>
+      <p>Intel i9 • RTX 4090 • 64GB DDR5</p>
+      <span>$4,999</span>
+    </div>
+
+    <div class="product" data-tier="mid" data-type="desktop" data-gpu="dGPU" data-ram="32" data-price="3799" data-use="gaming,creative" data-portable="no">
+      <h3>ARZA Nova</h3>
+      <p>Ryzen 9 • RTX 4080 • 32GB DDR5</p>
+      <span>$3,799</span>
+    </div>
+
+    <div class="product" data-tier="mid" data-type="desktop" data-gpu="dGPU" data-ram="32" data-price="2899" data-use="gaming,creative" data-portable="no">
+      <h3>ARZA Phantom</h3>
+      <p>Ryzen 7 • RTX 4070 Ti • 32GB DDR5</p>
+      <span>$2,899</span>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 ARZA Inc. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="support.html">Support</a> •
+      <a href="about.html">About</a> •
+      <a href="mailto:support@arza.tech">Email Us</a>
+    </div>
+  </footer>
+
   <script>
-    const quiz = document.getElementById('pcQuiz');
-    const products = document.querySelectorAll('.product');
-    const quizWrapper = document.getElementById('quizWrapper');
     const quizToggle = document.getElementById('quizToggle');
-    const clearFiltersBtn = document.getElementById('clearFilters');
-
-    quiz.addEventListener('submit', e => {
-      e.preventDefault();
-      filterProducts();
-    });
-
-    clearFiltersBtn.addEventListener('click', () => {
-      quiz.reset();
-      showAllProducts();
-    });
+    const quizWrapper = document.getElementById('quizWrapper');
+    const applyBtn = document.getElementById('applyFilters');
+    const clearBtn = document.getElementById('clearFilters');
+    const products = document.querySelectorAll('.product');
 
     quizToggle.addEventListener('click', () => {
-      const isCollapsed = quizWrapper.classList.toggle('collapsed');
-      quizToggle.textContent = isCollapsed ? '🔼 Show Quiz' : '🔽 Hide Quiz';
+      quizWrapper.classList.toggle('collapsed');
     });
 
-    function filterProducts() {
-      const form = new FormData(quiz);
-      const use = form.get('use');
-      const multitask = form.get('multitask');
-      const tier = form.get('tier');
+    applyBtn.addEventListener('click', () => {
+      const form = document.forms['pcFilterForm'];
+      const use = form['use_case'].value;
+      const portable = form['portability'].value;
+      const ram = parseInt(form['ram'].value) || 0;
+      const tier = form['tier'].value;
 
-      let minRAM = multitask === "light" ? 4 : multitask === "medium" ? 8 : 16;
-      // Use case determines if dedicated GPU is required for gaming, creative, dev
-      const gpuRequired = (use === "gaming" || use === "creative" || use === "dev");
+      products.forEach(product => {
+        const prodUse = product.dataset.use.split(',');
+        const prodPortable = product.dataset.portable;
+        const prodRam = parseInt(product.dataset.ram);
+        const prodTier = product.dataset.tier;
 
-      products.forEach(p => {
-        const ram = parseInt(p.dataset.ram);
-        const gpu = p.dataset.gpu;
-        const productTier = p.dataset.tier;
+        const matchesUse = use ? prodUse.includes(use) : true;
+        const matchesPortable = portable ? prodPortable === portable : true;
+        const matchesRam = ram ? prodRam >= ram : true;
+        const matchesTier = tier ? prodTier === tier : true;
 
-        const show =
-          ram >= minRAM &&
-          (!gpuRequired || gpu === "dedicated") &&
-          (productTier === tier);
-
-        p.classList.toggle('hidden', !show);
+        if (matchesUse && matchesPortable && matchesRam && matchesTier) {
+          product.classList.remove('hidden');
+        } else {
+          product.classList.add('hidden');
+        }
       });
-    }
+    });
 
-    function showAllProducts() {
-      products.forEach(p => p.classList.remove('hidden'));
-    }
+    clearBtn.addEventListener('click', () => {
+      document.getElementById('pcFilterForm').reset();
+      products.forEach(product => product.classList.remove('hidden'));
+    });
   </script>
 </body>
 </html>
