@@ -1,51 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>ARZA | Shop</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ARZA PC Finder</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #111;
+      color: #eee;
+      padding: 2rem;
+    }
+
+    h2 {
+      margin-bottom: 1rem;
+    }
+
+    .question, .product {
+      margin-bottom: 1.5rem;
+    }
+
+    label, select {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    select, button {
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+
+    .product {
+      border: 1px solid #333;
+      padding: 1rem;
+      border-radius: 8px;
+      background: #222;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #quizToggle {
+      margin-bottom: 1rem;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      background: #333;
+      border: none;
+      color: #eee;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    #quizToggle:hover {
+      background: #444;
+    }
+
+    #quizWrapper {
+      margin-bottom: 2rem;
+      border: 1px solid #333;
+      padding: 1rem;
+      background: #1a1a1a;
+      border-radius: 8px;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <div class="logo">ARZA</div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="shop.html">Shop</a>
-      <a href="build.html">Build</a>
-      <a href="support.html">Support</a>
-      <a href="about.html">About</a>
-    </nav>
-  </header>
 
-  <section class="hero">
-    <h1>Prebuilt Power Rigs</h1>
-    <p>Engineered for domination. Plug in, power up.</p>
-  </section>
+  <button id="quizToggle">🔽 Hide Quiz</button>
 
-  <section class="products">
-    <div class="product">
+  <div id="quizWrapper">
+    <form id="pcQuiz">
+      <h2>🧠 What Do You Need Your PC For?</h2>
+
+      <div class="question">
+        <label>Use case:</label>
+        <select name="use" required>
+          <option value="gaming">Gaming</option>
+          <option value="school">School/Work</option>
+          <option value="creative">Creative</option>
+          <option value="dev">Dev/Data/Engineering</option>
+          <option value="general">General Use</option>
+          <option value="audio">Audio</option>
+        </select>
+      </div>
+
+      <div class="question">
+        <label>How much do you multitask?</label>
+        <select name="multitask" required>
+          <option value="light">Light (4GB)</option>
+          <option value="medium">Medium (8GB)</option>
+          <option value="heavy">Heavy (16GB+)</option>
+        </select>
+      </div>
+
+      <div class="question">
+        <label>Preferred ARZA Tier:</label>
+        <select name="tier" required>
+          <option value="low">Low-end</option>
+          <option value="mid">Mid-end</option>
+          <option value="high">High-end</option>
+        </select>
+      </div>
+
+      <button type="submit">Filter Products</button>
+    </form>
+  </div>
+
+  <h2>🔥 Recommended PCs</h2>
+  <section id="products">
+    <div class="product" data-tier="high" data-gpu="dedicated" data-ram="64">
       <h2>ARZA Titan X</h2>
       <p>Intel i9 • RTX 4090 • 64GB DDR5</p>
       <span>$4,999</span>
     </div>
-    <div class="product">
+    <div class="product" data-tier="mid" data-gpu="dedicated" data-ram="32">
       <h2>ARZA Nova</h2>
       <p>Ryzen 9 • RTX 4080 • 32GB DDR5</p>
       <span>$3,799</span>
     </div>
-    <div class="product">
+    <div class="product" data-tier="mid" data-gpu="dedicated" data-ram="32">
       <h2>ARZA Phantom</h2>
       <p>Ryzen 7 • RTX 4070 Ti • 32GB DDR5</p>
       <span>$2,899</span>
     </div>
+    <div class="product" data-tier="low" data-gpu="integrated" data-ram="8">
+      <h2>ARZA LiteBook</h2>
+      <p>Intel i5 • Iris Xe • 8GB DDR4</p>
+      <span>$899</span>
+    </div>
   </section>
 
-  <footer>
-    <p>&copy; 2025 ARZA Inc. All rights reserved.</p>
-    <div class="footer-links">
-      <a href="support.html">Support</a> •
-      <a href="about.html">About</a>
-    </div>
-  </footer>
+  <script>
+    const quiz = document.getElementById('pcQuiz');
+    const products = document.querySelectorAll('.product');
+    const quizWrapper = document.getElementById('quizWrapper');
+    const quizToggle = document.getElementById('quizToggle');
+
+    quiz.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const form = new FormData(quiz);
+      const use = form.get('use');
+      const multitask = form.get('multitask');
+      const tier = form.get('tier');
+
+      let minRAM = multitask === "light" ? 4 : multitask === "medium" ? 8 : 16;
+      let gpuRequired = (use === "gaming" || use === "creative" || use === "dev");
+
+      products.forEach(p => {
+        const ram = parseInt(p.dataset.ram);
+        const gpu = p.dataset.gpu;
+        const productTier = p.dataset.tier;
+
+        const show =
+          ram >= minRAM &&
+          (!gpuRequired || gpu === "dedicated") &&
+          (productTier === tier);
+
+        p.classList.toggle('hidden', !show);
+      });
+    });
+
+    quizToggle.addEventListener('click', () => {
+      quizWrapper.classList.toggle('hidden');
+      quizToggle.textContent = quizWrapper.classList.contains('hidden') ? '🔼 Show Quiz' : '🔽 Hide Quiz';
+    });
+  </script>
 </body>
 </html>
