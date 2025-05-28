@@ -1,0 +1,41 @@
+<!-- product.html -->
+<body>
+  <div id="productDetails"></div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+
+    const productData = {
+      phantom: {
+        name: 'ARZA Phantom',
+        specs: 'Ryzen 7 • RTX 4070 Ti • 32GB DDR5 • 2TB SSD',
+        price: '$2,899',
+        img: 'phantom.jpg',
+        description: 'A mid-tier powerhouse for creators and gamers.'
+      },
+      titan: {
+        name: 'ARZA Titan X',
+        specs: 'Intel i9 • RTX 4090 • 64GB DDR5 • 4TB SSD',
+        price: '$4,999',
+        img: 'titan.jpg',
+        description: 'An elite beast for the serious performance junkie.'
+      }
+    };
+
+    const product = productData[id];
+
+    if (product) {
+      document.getElementById('productDetails').innerHTML = `
+        <h1>${product.name}</h1>
+        <img src="${product.img}" alt="${product.name}">
+        <p><strong>Specs:</strong> ${product.specs}</p>
+        <p><strong>Description:</strong> ${product.description}</p>
+        <p><strong>Price:</strong> ${product.price}</p>
+        <button>Add to Cart</button>
+      `;
+    } else {
+      document.getElementById('productDetails').innerHTML = `<p>Product not found.</p>`;
+    }
+  </script>
+</body>
