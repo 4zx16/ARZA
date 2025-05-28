@@ -1,4 +1,7 @@
 /* ==== Global Site Header (Professional ARZA Theme) ==== */
+html {
+  scroll-behavior: smooth;
+}
 header {
   background-color: #111;
   padding: 1rem 2rem;
