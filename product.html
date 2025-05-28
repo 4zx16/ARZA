@@ -1,13 +1,260 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="referrer" content="no-referrer" />
-  <title>ARZA Product Details</title>
-  <meta name="description" content="Detailed specs, pricing, and info about ARZA's custom-built PCs. Find the perfect desktop or laptop for gaming, dev, creative, and more.">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/1160008247755948164/1377147823530704896/tG_JYV9N_400x400.png?ex=6837e85b&is=683696db&hm=a3775f237f480ee4ba570ea31d80aeda47dd89186f78a42b95aeb81b1bb6c9d4&">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ARZA Shop | Product Details</title>
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="description" content="Detailed specs, pricing, and info about ARZA's custom-built PCs. Find the perfect desktop or laptop for gaming, dev, creative, and more." />
+  <style>
+    /* Global & Reset */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #111;
+      color: #eee;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    header {
+      background: #b01a1a;
+      width: 100%;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(176, 26, 26, 0.7);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    header .logo {
+      font-weight: 900;
+      font-size: 1.8rem;
+      letter-spacing: 3px;
+      color: #fff;
+      cursor: default;
+      user-select: none;
+    }
+    nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      user-select: none;
+    }
+    nav a:hover {
+      background: #ff4747;
+      color: #111;
+    }
+
+    main {
+      max-width: 900px;
+      width: 100%;
+      margin: 2rem auto 3rem auto;
+      padding: 0 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    .product-card {
+      background: #1a1a1a;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 25px rgba(176, 26, 26, 0.8);
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 900px;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      padding: 2rem;
+    }
+    .product-image {
+      flex: 1 1 300px;
+      max-width: 350px;
+      border-radius: 10px;
+      object-fit: contain;
+      user-select: none;
+      filter: drop-shadow(0 0 8px #b01a1a);
+    }
+    .product-info {
+      flex: 1 1 400px;
+      color: #eee;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      gap: 1rem;
+    }
+    .product-info h1 {
+      margin: 0;
+      font-weight: 800;
+      color: #ff4747;
+      font-size: 2.5rem;
+      user-select: none;
+    }
+    .desc {
+      font-size: 1.1rem;
+      line-height: 1.5;
+      color: #ccc;
+      max-width: 450px;
+    }
+    .specs {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+      color: #bbb;
+      font-size: 1rem;
+      user-select: none;
+    }
+    .specs li {
+      margin-bottom: 0.5rem;
+    }
+    .os-selector {
+      width: 100%;
+      max-width: 400px;
+      margin-top: 1.5rem;
+      text-align: left;
+    }
+    .os-selector label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-weight: 700;
+      color: #eee;
+      user-select: none;
+    }
+    select, input[type="text"] {
+      width: 100%;
+      padding: 0.5rem 0.8rem;
+      font-size: 1rem;
+      border-radius: 6px;
+      border: 2px solid #b01a1a;
+      background: #222;
+      color: #eee;
+      transition: border-color 0.3s ease;
+    }
+    select:focus, input[type="text"]:focus {
+      outline: none;
+      border-color: #ff4747;
+      background: #2a2a2a;
+    }
+    .price {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #ff4747;
+      margin-top: 2rem;
+      user-select: none;
+    }
+    .buy-btn {
+      margin-top: 2rem;
+      padding: 0.85rem 2rem;
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: #fff;
+      background: #b01a1a;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      user-select: none;
+      width: 100%;
+      max-width: 400px;
+    }
+    .buy-btn:disabled {
+      background: #660808;
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+    .buy-btn:not(:disabled):hover {
+      background: #ff4747;
+    }
+
+    /* Related products */
+    #relatedProducts {
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto 4rem auto;
+      padding: 0 1rem;
+      color: #eee;
+      text-align: center;
+    }
+    #relatedProducts h2 {
+      margin-bottom: 1rem;
+      color: #ff4747;
+      font-weight: 700;
+      user-select: none;
+    }
+    .related-grid {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .related-item {
+      flex: 1 1 30%;
+      background: #1a1a1a;
+      border-radius: 8px;
+      padding: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      color: #eee;
+      user-select: none;
+    }
+    .related-item:hover {
+      background: #b01a1a;
+    }
+    .related-item img {
+      max-width: 100%;
+      border-radius: 6px;
+      margin-bottom: 0.6rem;
+      object-fit: cover;
+      filter: drop-shadow(0 0 5px #b01a1a);
+    }
+    .related-item h4 {
+      margin: 0.4rem 0;
+      font-weight: 700;
+      color: #ff4747;
+    }
+    .related-item span {
+      color: #eee;
+      font-weight: 700;
+    }
+
+    /* Responsive tweak */
+    @media (max-width: 768px) {
+      .product-card {
+        flex-direction: column;
+        padding: 1.5rem;
+      }
+      .product-image, .product-info {
+        flex: none;
+        max-width: 100%;
+        width: 100%;
+      }
+      .product-info h1 {
+        font-size: 2rem;
+      }
+      .buy-btn {
+        max-width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -25,78 +272,136 @@
 
   <section id="relatedProducts" class="related"></section>
 
-<script>
-  const params = new URLSearchParams(window.location.search);
-  const id = params.get('id');
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
 
-  const products = {
-    phantom: {
-      name: 'ARZA Phantom',
-      specs: ['Ryzen 7 7700X', 'RTX 4070 Ti', '32GB DDR5', '2TB NVMe SSD'],
-      os: 'Windows 11 Pro',
-      price: '$2,899',
-      image: 'https://example.com/images/phantom.jpg',
-      desc: 'A balanced powerhouse built for gamers and creators. Handles AAA gaming and multi-app workflows with ease.',
-      type: 'desktop'
-    },
-    titan: {
-      name: 'ARZA Titan X',
-      specs: ['Intel i9-14900K', 'RTX 4090', '64GB DDR5', '4TB NVMe SSD'],
-      os: 'Windows 11 Pro',
-      price: '$4,999',
-      image: 'https://example.com/images/titan.jpg',
-      desc: 'Maxed out with flagship components. Perfect for 4K gaming, AI, and high-performance dev work.',
-      type: 'desktop'
-    },
-    nova: {
-      name: 'ARZA Nova',
-      specs: ['Ryzen 9 7900X', 'RTX 4080', '32GB DDR5', '2TB NVMe SSD'],
-      os: 'Ubuntu 22.04 LTS',
-      price: '$3,799',
-      image: 'https://example.com/images/nova.jpg',
-      desc: 'Reliable high-performance system with elite multitasking capability. Ideal for creatives and engineers.',
-      type: 'desktop'
+    const products = {
+      phantom: {
+        name: 'ARZA Phantom',
+        specs: ['Ryzen 7 7700X', 'RTX 4070 Ti', '32GB DDR5', '2TB NVMe SSD'],
+        basePrice: 2899,
+        image: 'https://example.com/images/phantom.jpg',
+        desc: 'A balanced powerhouse built for gamers and creators. Handles AAA gaming and multi-app workflows with ease.',
+        type: 'desktop'
+      },
+      titan: {
+        name: 'ARZA Titan X',
+        specs: ['Intel i9-14900K', 'RTX 4090', '64GB DDR5', '4TB NVMe SSD'],
+        basePrice: 4999,
+        image: 'https://example.com/images/titan.jpg',
+        desc: 'Maxed out with flagship components. Perfect for 4K gaming, AI, and high-performance dev work.',
+        type: 'desktop'
+      },
+      nova: {
+        name: 'ARZA Nova',
+        specs: ['Ryzen 9 7900X', 'RTX 4080', '32GB DDR5', '2TB NVMe SSD'],
+        basePrice: 3799,
+        image: 'https://example.com/images/nova.jpg',
+        desc: 'Reliable high-performance system with elite multitasking capability. Ideal for creatives and engineers.',
+        type: 'desktop'
+      }
+    };
+
+    const osOptions = {
+      "Windows": {
+        versions: {
+          "Windows 11": 150
+        }
+      },
+      "Linux": {
+        // No predefined versions, user inputs text
+      }
+    };
+
+    if (!id || !products[id]) {
+      document.getElementById('productDetails').innerHTML = '<p style="color:#ff4747; font-weight:700; text-align:center;">Product not found. Please check the link.</p>';
+    } else {
+      const product = products[id];
+
+      const productHTML = `
+        <div class="product-card" role="region" aria-label="${product.name} details">
+          <img src="${product.image}" alt="${product.name}" class="product-image" />
+          <div class="product-info">
+            <h1>${product.name}</h1>
+            <p class="desc">${product.desc}</p>
+            <ul class="specs" aria-label="Specifications">
+              ${product.specs.map(spec => `<li>${spec}</li>`).join('')}
+            </ul>
+
+            <div class="os-selector">
+              <label for="osSelect">Choose Operating System:</label>
+              <select id="osSelect" aria-describedby="osHelp">
+                <option value="none" selected disabled>Select OS</option>
+                <option value="Windows">Windows (extra $150)</option>
+                <option value="Linux">Linux (specify)</option>
+              </select>
+              <input type="text" id="linuxVersion" placeholder="Enter Linux distro/version" style="display:none; margin-top:8px;" aria-label="Linux version input"/>
+              <small id="osHelp" style="color:#bbb;">Windows adds $150. Linux is free but specify distro/version.</small>
+            </div>
+
+            <div class="price" aria-live="polite">$${product.basePrice.toFixed(2)}</div>
+            <button class="buy-btn" disabled aria-disabled="true">Add to Cart</button>
+          </div>
+        </div>
+      `;
+      document.getElementById('productDetails').innerHTML = productHTML;
+
+      const osSelect = document.getElementById('osSelect');
+      const linuxInput = document.getElementById('linuxVersion');
+      const priceDisplay = document.querySelector('.price');
+      const buyBtn = document.querySelector('.buy-btn');
+
+      function updatePrice() {
+        let finalPrice = product.basePrice;
+        if (osSelect.value === 'Windows') {
+          finalPrice += 150;
+          linuxInput.style.display = 'none';
+          linuxInput.value = '';
+        } else if (osSelect.value === 'Linux') {
+          linuxInput.style.display = 'block';
+        } else {
+          linuxInput.style.display = 'none';
+          linuxInput.value = '';
+        }
+        priceDisplay.textContent = `$${finalPrice.toFixed(2)}`;
+        buyBtn.disabled = osSelect.value === 'none' || (osSelect.value === 'Linux' && linuxInput.value.trim() === '');
+        buyBtn.setAttribute('aria-disabled', buyBtn.disabled.toString());
+      }
+
+      osSelect.addEventListener('change', updatePrice);
+      linuxInput.addEventListener('input', updatePrice);
+
+      // Related Products Section
+      const relatedProductsEl = document.getElementById('relatedProducts');
+      relatedProductsEl.innerHTML = '<h2>Related Products</h2><div class="related-grid"></div>';
+      const relatedGrid = relatedProductsEl.querySelector('.related-grid');
+
+      Object.entries(products).forEach(([key, prod]) => {
+        if (key !== id) {
+          const item = document.createElement('div');
+          item.className = 'related-item';
+          item.tabIndex = 0;
+          item.setAttribute('role', 'link');
+          item.setAttribute('aria-label', `View details for ${prod.name}`);
+          item.innerHTML = `
+            <img src="${prod.image}" alt="${prod.name}" />
+            <h4>${prod.name}</h4>
+            <span>$${prod.basePrice.toFixed(2)}</span>
+          `;
+          item.onclick = () => {
+            window.location.href = `product.html?id=${key}`;
+          };
+          item.onkeypress = (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              window.location.href = `product.html?id=${key}`;
+            }
+          };
+          relatedGrid.appendChild(item);
+        }
+      });
     }
-  };
-
-  const product = products[id];
-
-  if (product) {
-    // Update page title dynamically
-    document.title = `ARZA Shop | ${product.name}`;
-
-    // Add OS to specs list
-    const specsList = [...product.specs, `OS: ${product.os}`]
-      .map(s => `<li>${s}</li>`).join('');
-
-    document.getElementById('productDetails').innerHTML = `
-      <div class="product-card">
-        <img src="${product.image}" alt="${product.name}" class="product-image">
-        <div class="product-info">
-          <h1>${product.name}</h1>
-          <p class="desc">${product.desc}</p>
-          <ul class="specs">${specsList}</ul>
-          <p class="price">${product.price}</p>
-          <button class="buy-btn">Add to Cart</button>
-        </div>
-      </div>
-    `;
-
-    const related = Object.entries(products)
-      .filter(([key, p]) => key !== id && p.type === product.type)
-      .map(([key, p]) => `
-        <div class="related-item" onclick="location.href='product.html?id=${key}'">
-          <img src="${p.image}" alt="${p.name}">
-          <h4>${p.name}</h4>
-          <span>${p.price}</span>
-        </div>
-      `).join('');
-
-    document.getElementById('relatedProducts').innerHTML = `
-      <h2>Related Products</h2>
-      <div class="related-grid">${related}</div>
-    `;
-  } else {
-    document.getElementById('productDetails').innerHTML = '<p>Product not found.</p>';
-  }
-</script>
+  </script>
+</body>
+</html>
