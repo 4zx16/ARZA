@@ -223,14 +223,20 @@
             <option value="Linux">Linux</option>
           </select>
 
-          <label for="windowsVersion" id="winLabel" style="display:none;">Select Windows Edition <span aria-hidden="true" style="color:red;">*</span></label>
-          <select id="windowsVersion" aria-required="true" style="display:none;">
-            <option value="" selected disabled>Select Windows Edition</option>
-            <option value="Home" data-price="150">Windows 11 Home (+$150)</option>
-            <option value="Pro" data-price="250">Windows 11 Pro (+$250)</option>
-            <option value="Education" data-price="200">Windows 11 Education (+$200)</option>
-          </select>
+<div id="windowsOptions" class="os-sub-options" style="display: none;">
+  <label for="windowsEdition">Select Windows Edition:</label>
+  <select id="windowsEdition" required>
+    <option value="" disabled selected>Select Edition</option>
+    <option value="Home">Windows 11 Home</option>
+    <option value="Pro">Windows 11 Pro</option>
+    <option value="Education">Windows 11 Education</option>
+  </select>
 
+  <div class="checkbox-wrap">
+    <input type="checkbox" id="dontActivateCheckbox">
+    <label for="dontActivateCheckbox">Don't activate Windows (I’ll do it myself)</label>
+  </div>
+</div>
           <label for="linuxVersion" id="linuxLabel" style="display:none;">Enter Linux distro/version <span aria-hidden="true" style="color:red;">*</span></label>
           <input type="text" id="linuxVersion" aria-required="true" placeholder="e.g. Ubuntu 22.04" style="display:none;" />
           <small>Note: 2-year warranty is included in the price. Windows editions add to the base price. Linux is free.</small>
@@ -255,8 +261,6 @@
       <h2>Related Products</h2>
       <div class="related-grid" role="list">${related}</div>
     `;
-
-    // Logic to show/hide Windows or Linux fields and update price
     const osSelect = document.getElementById('osSelect');
     const windowsSelect = document.getElementById('windowsVersion');
     const linuxInput = document.getElementById('linuxVersion');
@@ -264,18 +268,26 @@
     const linuxLabel = document.getElementById('linuxLabel');
     const priceDisplay = document.querySelector('.price');
     const buyBtn = document.querySelector('.buy-btn');
+    const basePrice = parseInt(product.price.replace(/\D/g, '')); // Grab from loaded product
 
-    let currentPrice = product.basePrice;
-
-    function updatePrice() {
-      let osPrice = 0;
-
-      if (osSelect.value === 'Windows') {
-        const winOption = windowsSelect.options[windowsSelect.selectedIndex];
-        if (winOption && winOption.dataset && winOption.dataset.price) {
-          osPrice = parseFloat(winOption.dataset.price);
-        }
-      }
+    function updateVisibility() {
+  const os = osSelect.value;
+  winLabel.style.display = os === 'Windows' ? 'block' : 'none';
+  linuxLabel.style.display = os === 'Linux' ? 'block' : 'none';
+  updatePrice();
+}
+    
+  function updatePrice() {
+  let osFee = 0;
+  if (osSelect.value === 'Windows' && !dontActivate.checked) {
+    osFee = 60;
+  }
+  priceDisplay.textContent = `$${(basePrice + osFee).toLocaleString()}`;
+}
+osSelect.addEventListener('change', updateVisibility);
+windowsSelect.addEventListener('change', updatePrice);
+linuxInput.addEventListener('input', updatePrice);
+dontActivate.addEventListener('change', updatePric
       // Linux distro free, no extra cost
 
       currentPrice = product.basePrice + osPrice;
@@ -351,11 +363,9 @@
         osVersion: osSelect.value === 'Windows' ? windowsSelect.value : linuxInput.value.trim(),
         price: currentPrice
       };
-
       alert(`Added to cart:\n${JSON.stringify(selection, null, 2)}`);
       // Push this to your cart system here
     });
-
     toggleFields();
   }
 </script>
