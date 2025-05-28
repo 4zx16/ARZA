@@ -51,11 +51,8 @@ elements.forEach(el => {
     }
   }
 });
-document.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach(header => {
-  const text = header.textContent;
-  if (text.includes('ARZA')) {
-    // Replace "ARZA" with a span that has the gradient class
-    const newHTML = text.replace(/ARZA/g, '<span class="arza-gradient">ARZA</span>');
-    header.innerHTML = newHTML;
+document.querySelectorAll('header').forEach(header => {
+  if (header.textContent.includes('ARZA')) {
+    header.innerHTML = header.innerHTML.replace(/ARZA/g, '<span class="arza-gradient">ARZA</span>');
   }
 });
