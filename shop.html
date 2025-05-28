@@ -53,17 +53,17 @@
     </div>
   </section>
   <section class="product-grid">
-    <div class="product" data-tier="high" data-type="desktop" data-gpu="dGPU" data-ram="64" data-price="4999" data-use="gaming,dev" data-portable="desktop">
+    <div class="product" data-tier="high" data-gpu="dGPU" data-ram="64" data-price="4999" data-use="gaming,dev" data-portable="desktop">
       <h3>ARZA Titan X</h3>
       <p>Intel i9 • RTX 4090 • 64GB DDR5</p>
       <span>$4,999</span>
     </div>
-    <div class="product" data-tier="mid" data-type="desktop" data-gpu="dGPU" data-ram="32" data-price="3799" data-use="gaming,creative" data-portable="desktop">
+    <div class="product" data-tier="mid" data-gpu="dGPU" data-ram="32" data-price="3799" data-use="gaming,creative" data-portable="desktop">
       <h3>ARZA Nova</h3>
       <p>Ryzen 9 • RTX 4080 • 32GB DDR5</p>
       <span>$3,799</span>
     </div>
-    <div class="product" data-tier="mid" data-type="desktop" data-gpu="dGPU" data-ram="32" data-price="2899" data-use="gaming,creative" data-portable="desktop">
+    <div class="product" data-tier="mid" data-gpu="dGPU" data-ram="32" data-price="2899" data-use="gaming,creative" data-portable="desktop">
       <h3>ARZA Phantom</h3>
       <p>Ryzen 7 • RTX 4070 Ti • 32GB DDR5</p>
       <span>$2,899</span>
@@ -89,15 +89,15 @@
       music: 'mid'
     };
     
- applyBtn.addEventListener('click', () => {
+applyBtn.addEventListener('click', () => {
   const form = document.forms['pcFilterForm'];
   const use = form['use_case'].value;
-  const portability = form['portability'].value;
-   
+  const portability = form['portability'].value; // desktop or laptop
+
   products.forEach(product => {
     const prodUse = product.dataset.use.split(',');
-    const prodPortable = product.dataset.portable; // 'desktop' or 'laptop'
-    const matchesUse = use ? prodUse.includes(use) : true; // if use is blank, ignore filter
+    const prodPortable = product.dataset.portable || ''; // fallback empty string
+    const matchesUse = use ? prodUse.includes(use) : true;
     const matchesPortable = portability ? prodPortable === portability : true;
 
     if (matchesUse && matchesPortable) {
