@@ -28,3 +28,34 @@ if (buildForm) {
     window.location.href = mailtoLink;
   });
 }
+// Find all elements that exactly contain the text "Email Us"
+const elements = [...document.querySelectorAll('button, a, div, span')]; // Add more if needed
+
+elements.forEach(el => {
+  if (el.textContent.trim() === 'Email Us') {
+    // Make it a mailto link
+    el.style.cursor = 'pointer';
+
+    // If it's NOT an <a>, convert it to one for proper mailto behavior
+    if (el.tagName.toLowerCase() !== 'a') {
+      const mailtoLink = document.createElement('a');
+      mailtoLink.href = 'mailto:support@arza.tech?subject=Inquiry';
+      mailtoLink.textContent = el.textContent;
+      mailtoLink.style.color = window.getComputedStyle(el).color;
+      mailtoLink.style.textDecoration = 'none';
+      mailtoLink.className = el.className; // preserve classes if needed
+      el.replaceWith(mailtoLink);
+    } else {
+      // If it already is <a>, just set href
+      el.href = 'mailto:support@arza.tech?subject=Inquiry';
+    }
+  }
+});
+document.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach(header => {
+  const text = header.textContent;
+  if (text.includes('ARZA')) {
+    // Replace "ARZA" with a span that has the gradient class
+    const newHTML = text.replace(/ARZA/g, '<span class="arza-gradient">ARZA</span>');
+    header.innerHTML = newHTML;
+  }
+});
