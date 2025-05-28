@@ -5,7 +5,7 @@
     "basePrice": 2899,
     "image": "phantom.jpg",
     "desc": "A balanced powerhouse built for gamers and creators. Handles AAA gaming and multi-app workflows with ease.",
-    "type": "desktop"
+    "type": "desktop",
     "tier": "mid"
   },
   "titan": {
@@ -14,7 +14,7 @@
     "basePrice": 4999,
     "image": "titan.jpg",
     "desc": "Maxed out with flagship components. Perfect for 4K gaming, AI, and high-performance dev work.",
-    "type": "desktop"
+    "type": "desktop",
     "tier": "high"
   },
   "nova": {
@@ -23,7 +23,7 @@
     "basePrice": 3799,
     "image": "nova.jpg",
     "desc": "Reliable high-performance system with elite multitasking capability. Ideal for creatives and engineers.",
-    "type": "desktop"
+    "type": "desktop",
     "tier": "high"
   }
 }
