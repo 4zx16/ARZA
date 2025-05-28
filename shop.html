@@ -88,31 +88,25 @@
       general: 'low',
       music: 'mid'
     };
+    
+ applyBtn.addEventListener('click', () => {
+  const form = document.forms['pcFilterForm'];
+  const use = form['use_case'].value;
+  const portability = form['portability'].value;
+   
+  products.forEach(product => {
+    const prodUse = product.dataset.use.split(',');
+    const prodPortable = product.dataset.portable; // 'desktop' or 'laptop'
+    const matchesUse = use ? prodUse.includes(use) : true; // if use is blank, ignore filter
+    const matchesPortable = portability ? prodPortable === portability : true;
 
-    applyBtn.addEventListener('click', () => {
-      const form = document.forms['pcFilterForm'];
-      const use = form['use_case'].value;
-      const portability = form['portability'].value;
-
-      // Auto-assign tier based on usage
-      const tier = usageToTier[use] || '';
-
-      products.forEach(product => {
-        const prodUse = product.dataset.use.split(',');
-        const prodPortable = product.dataset.portable;
-        const prodTier = product.dataset.tier;
-
-        const matchesUse = use ? prodUse.includes(use) : true;
-        const matchesPortable = portability ? prodPortable === portability : true;
-        const matchesTier = tier ? prodTier === tier : true;
-
-        if (matchesUse && matchesPortable && matchesTier) {
-          product.classList.remove('hidden');
-        } else {
-          product.classList.add('hidden');
-        }
-      });
-    });
+    if (matchesUse && matchesPortable) {
+      product.classList.remove('hidden');
+    } else {
+      product.classList.add('hidden');
+    }
+  });
+});
     clearBtn.addEventListener('click', () => {
       document.getElementById('pcFilterForm').reset();
       products.forEach(product => product.classList.remove('hidden'));
