@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ARZA | Find Your PC</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .question { margin-bottom: 30px; }
+    .result { display: none; margin-top: 30px; }
+    .result .product { margin-bottom: 20px; border-top: 1px solid #333; padding-top: 20px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">ARZA</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="build.html">Build</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="support.html">Support</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Find the Perfect ARZA PC</h1>
+    <p>Answer a few questions and we’ll recommend builds tailored to you.</p>
+  </section>
+
+  <section class="form">
+    <form id="quizForm">
+      <div class="question">
+        <label>How much do you multitask?</label><br>
+        <select id="multitask">
+          <option value="4">Light</option>
+          <option value="8">Medium</option>
+          <option value="16">Heavy</option>
+        </select>
+      </div>
+
+      <div class="question">
+        <label>What’s your use case?</label><br>
+        <select id="usecase">
+          <option value="school">Schoolwork</option>
+          <option value="gaming">Heavy Gaming</option>
+          <option value="lightgaming">Light Gaming</option>
+          <option value="dev">Game/Software Dev</option>
+          <option value="ai">AI Work</option>
+          <option value="crypto">Crypto Mining</option>
+        </select>
+      </div>
+
+      <div class="question">
+        <label>How much RAM do you think you need?</label><br>
+        <select id="ram">
+          <option value="8">8 GB</option>
+          <option value="16">16 GB</option>
+          <option value="32">32 GB</option>
+          <option value="64">64 GB+</option>
+        </select>
+      </div>
+
+      <div class="question">
+        <label>What ARZA tier are you aiming for?</label><br>
+        <select id="tier">
+          <option value="low">Low-End</option>
+          <option value="mid">Mid-End</option>
+          <option value="high">High-End</option>
+        </select>
+      </div>
+
+      <button type="submit" class="cta">Find My PC</button>
+    </form>
+
+    <div id="result" class="result"></div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 ARZA Inc. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const products = [
+      {
+        name: "ARZA Titan X",
+        gpu: "dGPU",
+        ram: 64,
+        tier: "high",
+        use: ["gaming", "dev", "ai"]
+      },
+      {
+        name: "ARZA Nova",
+        gpu: "dGPU",
+        ram: 32,
+        tier: "mid",
+        use: ["gaming", "dev"]
+      },
+      {
+        name: "ARZA Phantom",
+        gpu: "dGPU",
+        ram: 32,
+        tier: "mid",
+        use: ["gaming"]
+      },
+      {
+        name: "ARZA Edge",
+        gpu: "iGPU",
+        ram: 8,
+        tier: "low",
+        use: ["school", "lightgaming"]
+      }
+    ];
+
+    document.getElementById("quizForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const multitask = parseInt(document.getElementById("multitask").value);
+      const usecase = document.getElementById("usecase").value;
+      const ram = parseInt(document.getElementById("ram").value);
+      const tier = document.getElementById("tier").value;
+
+      const matches = products.filter(p => {
+        const ramOK = p.ram >= multitask && p.ram >= ram;
+        const gpuOK = (usecase === "school" || usecase === "lightgaming")
+          ? p.gpu === "iGPU"
+          : p.gpu === "dGPU";
+        const useOK = p.use.includes(usecase);
+        const tierOK = p.tier === tier;
+        return ramOK && gpuOK && useOK && tierOK;
+      });
+
+      const resultEl = document.getElementById("result");
+      resultEl.innerHTML = "<h2>Recommended PCs:</h2>";
+
+      if (matches.length === 0) {
+        resultEl.innerHTML += "<p>No exact matches found. Try changing filters.</p>";
+      } else {
+        matches.forEach(m => {
+          resultEl.innerHTML += `<div class="product"><h3>${m.name}</h3><p>RAM: ${m.ram} GB | GPU: ${m.gpu}</p><p>Tier: ${m.tier}</p></div>`;
+        });
+      }
+
+      resultEl.style.display = "block";
+    });
+  </script>
+</body>
+</html>
