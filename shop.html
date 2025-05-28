@@ -58,69 +58,84 @@
 
   <script src="product.js"></script>
   <script>
-    const quizToggle = document.getElementById('quizToggle');
-    const quizWrapper = document.getElementById('quizWrapper');
-    const applyBtn = document.getElementById('applyFilters');
-    const clearBtn = document.getElementById('clearFilters');
-    const productGrid = document.getElementById('productGrid');
+ const quizToggle = document.getElementById('quizToggle');
+const quizWrapper = document.getElementById('quizWrapper');
+const applyBtn = document.getElementById('applyFilters');
+const clearBtn = document.getElementById('clearFilters');
+const productGrid = document.getElementById('productGrid');
 
-    const useCaseToTier = {
-      gaming: 'mid',
-      school: 'low',
-      creative: 'high',
-      dev: 'mid',
-      general: 'low',
-      music: 'mid'
-    };
+const useCaseToTier = {
+  gaming: 'mid',
+  school: 'low',
+  creative: 'high',
+  dev: 'mid',
+  general: 'low',
+  music: 'mid'
+};
 
-    let allProducts = {};
+let allProducts = {};
 
-    document.addEventListener('DOMContentLoaded', () => {
-      allProducts = productData;
-      renderProducts(Object.values(productData));
-    });
-
-    function renderProducts(products) {
-      productGrid.innerHTML = '';
-      products.forEach(product => {
-        const card = document.createElement('div');
-        card.className = 'product';
-        card.innerHTML = `
-          <img src="${product.image}" alt="${product.name}" />
-          <h3>${product.name}</h3>
-          <p>${product.desc}</p>
-          <span>$${product.basePrice.toLocaleString()}</span>
-        `;
-        card.addEventListener('click', () => {
-          window.location.href = `product.html?id=${product.id}`;
-        });
-        productGrid.appendChild(card);
-      });
-    }
-
-    applyBtn.addEventListener('click', () => {
-      const form = document.forms['pcFilterForm'];
-      const use = form['use_case'].value;
-      const portability = form['portability'].value;
-      const targetTier = useCaseToTier[use];
-
-      const filtered = Object.values(allProducts).filter(p => {
-        const matchesTier = !use || p.tier === targetTier;
-        const matchesType = !portability || p.type === portability;
-        return matchesTier && matchesType;
-      });
-
-      renderProducts(filtered);
-    });
-
-    clearBtn.addEventListener('click', () => {
-      document.getElementById('pcFilterForm').reset();
+document.addEventListener('DOMContentLoaded', () => {
+  fetch('products.json')
+    .then(response => {
+      if (!response.ok) throw new Error('Failed to load product data.');
+      return response.json();
+    })
+    .then(products => {
+      allProducts = products;
       renderProducts(Object.values(allProducts));
+    })
+    .catch(error => {
+      console.error(error);
+      productGrid.innerHTML = `<p style="color:#ff4747; text-align:center;">Error loading products. Try again later.</p>`;
     });
+});
 
-    quizToggle.addEventListener('click', () => {
-      quizWrapper.classList.toggle('collapsed');
+function renderProducts(products) {
+  productGrid.innerHTML = '';
+  products.forEach(product => {
+    const card = document.createElement('div');
+    card.className = 'product';
+    card.innerHTML = `
+      <img src="${product.image}" alt="${product.name}" />
+      <h3>${product.name}</h3>
+      <p>${product.desc}</p>
+      <span>$${product.basePrice.toLocaleString()}</span>
+    `;
+    card.addEventListener('click', () => {
+      // You don’t have IDs here, so use keys if you want to link properly:
+      // Let's find the key by matching product name, or better: add id to each product in JSON or map
+      // For now, assume you add 'id' manually to each product in JSON or in code
+      const productId = Object.keys(allProducts).find(key => allProducts[key] === product);
+      window.location.href = `product.html?id=${productId}`;
     });
+    productGrid.appendChild(card);
+  });
+}
+
+applyBtn.addEventListener('click', () => {
+  const form = document.forms['pcFilterForm'];
+  const use = form['use_case'].value;
+  const portability = form['portability'].value;
+  const targetTier = useCaseToTier[use];
+
+  const filtered = Object.values(allProducts).filter(p => {
+    const matchesTier = !use || p.tier === targetTier;
+    const matchesType = !portability || p.type === portability;
+    return matchesTier && matchesType;
+  });
+
+  renderProducts(filtered);
+});
+
+clearBtn.addEventListener('click', () => {
+  document.getElementById('pcFilterForm').reset();
+  renderProducts(Object.values(allProducts));
+});
+
+quizToggle.addEventListener('click', () => {
+  quizWrapper.classList.toggle('collapsed');
+});
   </script>
   <script src="websitestuff.js"></script>
 </body>
