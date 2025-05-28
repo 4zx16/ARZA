@@ -151,3 +151,24 @@ nav a.active {
 nav a.active::after {
   width: 100%;
 }
+@keyframes pulseRed {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.arza-gradient {
+  background: linear-gradient(270deg, #d62828, #e63946, #a4161a, #f94144);
+  background-size: 600% 600%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: pulseRed 8s ease infinite;
+  font-weight: 700; /* optional, to stand out */
+}
+
