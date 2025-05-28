@@ -268,7 +268,7 @@
     const linuxLabel = document.getElementById('linuxLabel');
     const priceDisplay = document.querySelector('.price');
     const buyBtn = document.querySelector('.buy-btn');
-    const basePrice = parseInt(product.price.replace(/\D/g, '')); // Grab from loaded product
+    let basePrice = parseInt(product.price.replace(/\D/g, ''));
 
     function updateVisibility() {
   const os = osSelect.value;
@@ -287,7 +287,7 @@
 osSelect.addEventListener('change', updateVisibility);
 windowsSelect.addEventListener('change', updatePrice);
 linuxInput.addEventListener('input', updatePrice);
-dontActivate.addEventListener('change', updatePric
+dontActivate.addEventListener('change', updatePrice);
       // Linux distro free, no extra cost
 
       currentPrice = product.basePrice + osPrice;
