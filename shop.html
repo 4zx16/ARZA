@@ -3,9 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="referrer" content="no-referrer" />
   <title>ARZA Shop | Elite Desktops & Laptops</title>
-  <meta name="description" content="Find the perfect desktop or laptop for gaming, dev, creative, and more.">
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" type="image/x-icon" href="logo.png">
 </head>
@@ -58,6 +56,7 @@
 
   <section class="product-grid" id="productGrid"></section>
 
+  <script src="product.js"></script>
   <script>
     const quizToggle = document.getElementById('quizToggle');
     const quizWrapper = document.getElementById('quizWrapper');
@@ -76,12 +75,10 @@
 
     let allProducts = {};
 
-    fetch('product.json')
-      .then(res => res.json())
-      .then(data => {
-        allProducts = data;
-        renderProducts(Object.values(data));
-      });
+    document.addEventListener('DOMContentLoaded', () => {
+      allProducts = productData;
+      renderProducts(Object.values(productData));
+    });
 
     function renderProducts(products) {
       productGrid.innerHTML = '';
