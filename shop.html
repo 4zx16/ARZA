@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ARZA PC Finder</title>
   <style>
     body {
@@ -28,6 +28,7 @@
     select, button {
       padding: 0.5rem;
       font-size: 1rem;
+      cursor: pointer;
     }
 
     .product {
@@ -35,10 +36,11 @@
       padding: 1rem;
       border-radius: 8px;
       background: #222;
+      transition: opacity 0.3s ease;
     }
 
     .hidden {
-      display: none;
+      display: none !important;
     }
 
     #quizToggle {
@@ -50,6 +52,7 @@
       color: #eee;
       cursor: pointer;
       border-radius: 4px;
+      user-select: none;
     }
 
     #quizToggle:hover {
@@ -59,9 +62,40 @@
     #quizWrapper {
       margin-bottom: 2rem;
       border: 1px solid #333;
-      padding: 1rem;
       background: #1a1a1a;
       border-radius: 8px;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.4s ease;
+      max-height: 1000px;
+      padding: 1rem;
+    }
+
+    /* Collapsed quiz */
+    #quizWrapper.collapsed {
+      max-height: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      border: 0;
+    }
+
+    #filterButtons {
+      margin-top: 1rem;
+    }
+
+    #filterButtons button {
+      margin-right: 1rem;
+      background: #444;
+      border: none;
+      color: #eee;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      font-weight: 600;
+      user-select: none;
+      transition: background 0.3s ease;
+    }
+
+    #filterButtons button:hover {
+      background: #555;
     }
   </style>
 </head>
@@ -103,7 +137,10 @@
         </select>
       </div>
 
-      <button type="submit">Filter Products</button>
+      <div id="filterButtons">
+        <button type="submit">Filter Products</button>
+        <button type="button" id="clearFilters">Clear Filters</button>
+      </div>
     </form>
   </div>
 
@@ -136,16 +173,32 @@
     const products = document.querySelectorAll('.product');
     const quizWrapper = document.getElementById('quizWrapper');
     const quizToggle = document.getElementById('quizToggle');
+    const clearFiltersBtn = document.getElementById('clearFilters');
 
-    quiz.addEventListener('submit', function (e) {
+    quiz.addEventListener('submit', e => {
       e.preventDefault();
+      filterProducts();
+    });
+
+    clearFiltersBtn.addEventListener('click', () => {
+      quiz.reset();
+      showAllProducts();
+    });
+
+    quizToggle.addEventListener('click', () => {
+      const isCollapsed = quizWrapper.classList.toggle('collapsed');
+      quizToggle.textContent = isCollapsed ? '🔼 Show Quiz' : '🔽 Hide Quiz';
+    });
+
+    function filterProducts() {
       const form = new FormData(quiz);
       const use = form.get('use');
       const multitask = form.get('multitask');
       const tier = form.get('tier');
 
       let minRAM = multitask === "light" ? 4 : multitask === "medium" ? 8 : 16;
-      let gpuRequired = (use === "gaming" || use === "creative" || use === "dev");
+      // Use case determines if dedicated GPU is required for gaming, creative, dev
+      const gpuRequired = (use === "gaming" || use === "creative" || use === "dev");
 
       products.forEach(p => {
         const ram = parseInt(p.dataset.ram);
@@ -159,12 +212,11 @@
 
         p.classList.toggle('hidden', !show);
       });
-    });
+    }
 
-    quizToggle.addEventListener('click', () => {
-      quizWrapper.classList.toggle('hidden');
-      quizToggle.textContent = quizWrapper.classList.contains('hidden') ? '🔼 Show Quiz' : '🔽 Hide Quiz';
-    });
+    function showAllProducts() {
+      products.forEach(p => p.classList.remove('hidden'));
+    }
   </script>
 </body>
 </html>
