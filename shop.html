@@ -70,6 +70,14 @@
     </div>
   </section>
   <script>
+document.querySelectorAll('.product').forEach(product => {
+  product.addEventListener('click', () => {
+    const id = product.dataset.id;
+    if (id) {
+      window.location.href = `product.html?id=${id}`;
+    }
+  });
+});
     const quizToggle = document.getElementById('quizToggle');
     const quizWrapper = document.getElementById('quizWrapper');
     const applyBtn = document.getElementById('applyFilters');
