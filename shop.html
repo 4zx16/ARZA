@@ -41,37 +41,15 @@
         </select>
       </div>
 
-      <div class="question">
-        <label>2. Do you need your PC to be portable?</label>
-        <select name="portability">
-          <option value="">Select</option>
-          <option value="yes">Yes</option>
-          <option value="maybe">Somewhat</option>
-          <option value="no">Not really</option>
-        </select>
-      </div>
+ <div class="question">
+  <label>2. What type of PC do you want?</label>
+  <select name="portability">
+    <option value="">Select</option>
+    <option value="laptop">Laptop</option>
+    <option value="desktop">Desktop</option>
+  </select>
+</div>
 
-      <div class="question">
-        <label>3. How powerful does your PC need to be?</label>
-        <select name="power">
-          <option value="">Select</option>
-          <option value="extreme">Extremely powerful</option>
-          <option value="moderate">Moderate</option>
-          <option value="light">Light</option>
-        </select>
-      </div>
-
-      <div class="question">
-        <label>4. How much RAM do you think you need?</label>
-        <select name="ram">
-          <option value="">Select</option>
-          <option value="4">4GB</option>
-          <option value="8">8GB</option>
-          <option value="16">16GB</option>
-          <option value="32">32GB</option>
-          <option value="64">64GB+</option>
-        </select>
-      </div>
 
       <div class="question">
         <label>5. What ARZA tier are you aiming for?</label>
@@ -89,77 +67,63 @@
       <button id="clearFilters">Clear Filters</button>
     </div>
   </section>
+<!-- Updated products with correct data-portable -->
+<section class="product-grid">
+  <div class="product" data-tier="high" data-type="desktop" data-gpu="dGPU" data-ram="64" data-price="4999" data-use="gaming,dev" data-portable="desktop">
+    <h3>ARZA Titan X</h3>
+    <p>Intel i9 • RTX 4090 • 64GB DDR5</p>
+    <span>$4,999</span>
+  </div>
 
-  <section class="product-grid">
-    <div class="product" data-tier="high" data-type="desktop" data-gpu="dGPU" data-ram="64" data-price="4999" data-use="gaming,dev" data-portable="no">
-      <h3>ARZA Titan X</h3>
-      <p>Intel i9 • RTX 4090 • 64GB DDR5</p>
-      <span>$4,999</span>
-    </div>
+  <div class="product" data-tier="mid" data-type="desktop" data-gpu="dGPU" data-ram="32" data-price="3799" data-use="gaming,creative" data-portable="desktop">
+    <h3>ARZA Nova</h3>
+    <p>Ryzen 9 • RTX 4080 • 32GB DDR5</p>
+    <span>$3,799</span>
+  </div>
 
-    <div class="product" data-tier="mid" data-type="desktop" data-gpu="dGPU" data-ram="32" data-price="3799" data-use="gaming,creative" data-portable="no">
-      <h3>ARZA Nova</h3>
-      <p>Ryzen 9 • RTX 4080 • 32GB DDR5</p>
-      <span>$3,799</span>
-    </div>
+  <div class="product" data-tier="mid" data-type="desktop" data-gpu="dGPU" data-ram="32" data-price="2899" data-use="gaming,creative" data-portable="desktop">
+    <h3>ARZA Phantom</h3>
+    <p>Ryzen 7 • RTX 4070 Ti • 32GB DDR5</p>
+    <span>$2,899</span>
+  </div>
+</section>
 
-    <div class="product" data-tier="mid" data-type="desktop" data-gpu="dGPU" data-ram="32" data-price="2899" data-use="gaming,creative" data-portable="no">
-      <h3>ARZA Phantom</h3>
-      <p>Ryzen 7 • RTX 4070 Ti • 32GB DDR5</p>
-      <span>$2,899</span>
-    </div>
-  </section>
+<script>
+  const quizToggle = document.getElementById('quizToggle');
+  const quizWrapper = document.getElementById('quizWrapper');
+  const applyBtn = document.getElementById('applyFilters');
+  const clearBtn = document.getElementById('clearFilters');
+  const products = document.querySelectorAll('.product');
 
-  <footer>
-    <p>&copy; 2025 ARZA Inc. All rights reserved.</p>
-    <div class="footer-links">
-      <a href="support.html">Support</a> •
-      <a href="about.html">About</a> •
-      <a href="mailto:support@arza.tech">Email Us</a>
-    </div>
-  </footer>
+  quizToggle.addEventListener('click', () => {
+    quizWrapper.classList.toggle('collapsed');
+  });
 
-  <script>
-    const quizToggle = document.getElementById('quizToggle');
-    const quizWrapper = document.getElementById('quizWrapper');
-    const applyBtn = document.getElementById('applyFilters');
-    const clearBtn = document.getElementById('clearFilters');
-    const products = document.querySelectorAll('.product');
+  applyBtn.addEventListener('click', () => {
+    const form = document.forms['pcFilterForm'];
+    const use = form['use_case'].value;
+    const portability = form['portability'].value;
+    const tier = form['tier'].value;
 
-    quizToggle.addEventListener('click', () => {
-      quizWrapper.classList.toggle('collapsed');
+    products.forEach(product => {
+      const prodUse = product.dataset.use.split(',');
+      const prodPortable = product.dataset.portable; // 'desktop' or 'laptop'
+      const prodTier = product.dataset.tier;
+
+      const matchesUse = use ? prodUse.includes(use) : true;
+      const matchesPortable = portability ? prodPortable === portability : true;
+      const matchesTier = tier ? prodTier === tier : true;
+
+      if (matchesUse && matchesPortable && matchesTier) {
+        product.classList.remove('hidden');
+      } else {
+        product.classList.add('hidden');
+      }
     });
+  });
 
-    applyBtn.addEventListener('click', () => {
-      const form = document.forms['pcFilterForm'];
-      const use = form['use_case'].value;
-      const portable = form['portability'].value;
-      const ram = parseInt(form['ram'].value) || 0;
-      const tier = form['tier'].value;
-
-      products.forEach(product => {
-        const prodUse = product.dataset.use.split(',');
-        const prodPortable = product.dataset.portable;
-        const prodRam = parseInt(product.dataset.ram);
-        const prodTier = product.dataset.tier;
-
-        const matchesUse = use ? prodUse.includes(use) : true;
-        const matchesPortable = portable ? prodPortable === portable : true;
-        const matchesRam = ram ? prodRam >= ram : true;
-        const matchesTier = tier ? prodTier === tier : true;
-
-        if (matchesUse && matchesPortable && matchesRam && matchesTier) {
-          product.classList.remove('hidden');
-        } else {
-          product.classList.add('hidden');
-        }
-      });
-    });
-
-    clearBtn.addEventListener('click', () => {
-      document.getElementById('pcFilterForm').reset();
-      products.forEach(product => product.classList.remove('hidden'));
-    });
-  </script>
-</body>
-</html>
+  clearBtn.addEventListener('click', () => {
+    document.getElementById('pcFilterForm').reset();
+    products.forEach(product => product.classList.remove('hidden'));
+  });
+</script>
