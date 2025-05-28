@@ -103,11 +103,7 @@ function renderProducts(products) {
       <span>$${product.basePrice.toLocaleString()}</span>
     `;
     card.addEventListener('click', () => {
-      // You don’t have IDs here, so use keys if you want to link properly:
-      // Let's find the key by matching product name, or better: add id to each product in JSON or map
-      // For now, assume you add 'id' manually to each product in JSON or in code
-      const productId = Object.keys(allProducts).find(key => allProducts[key] === product);
-      window.location.href = `product.html?id=${productId}`;
+      window.location.href = `product.html?id=${product.id}`;
     });
     productGrid.appendChild(card);
   });
