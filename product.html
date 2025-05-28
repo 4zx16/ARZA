@@ -3,12 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="referrer" content="no-referrer" />
-<title>ARZA Shop | Product Details</title>
-<link rel="stylesheet" href="styles.css" />
-<meta name="description" content="Find the perfect desktop or laptop for gaming, dev, creative, and more." />
-<link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/1160008247755948164/1377147823530704896/tG_JYV9N_400x400.png?ex=6837e85b&is=683696db&hm=a3775f237f480ee4ba570ea31d80aeda47dd89186f78a42b95aeb81b1bb6c9d4&">
-<title>ARZA Shop | Product Details</title>
+<title>ARZA Shop | Loading...</title>
 <style>
   body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -16,12 +11,22 @@
     margin: 0;
     color: #333;
   }
+  header {
+    padding: 1rem 2rem;
+    background-color: #b71c1c;
+    color: white;
+    font-weight: 700;
+    font-size: 1.5rem;
+    text-align: center;
+  }
   main#productDetails {
     min-height: 80vh;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     padding: 2rem 1rem;
+    flex-direction: column;
+    align-items: center;
   }
   .product-card {
     max-width: 650px;
@@ -32,6 +37,7 @@
     box-shadow: 0 4px 15px rgb(0 0 0 / 0.1);
     background-color: #fff;
     text-align: center;
+    margin-bottom: 3rem;
   }
   .product-image {
     max-width: 100%;
@@ -110,54 +116,104 @@
     background-color: #ccc;
     cursor: not-allowed;
   }
+  section.related {
+    width: 100%;
+    max-width: 650px;
+  }
+  section.related h2 {
+    text-align: center;
+    color: #b71c1c;
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+  .related-grid {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .related-item {
+    cursor: pointer;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 0.5rem;
+    width: 150px;
+    text-align: center;
+    transition: box-shadow 0.2s ease;
+  }
+  .related-item:hover {
+    box-shadow: 0 0 8px #b71c1c;
+  }
+  .related-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+  }
+  .related-item h4 {
+    margin: 0.5rem 0 0.3rem;
+    font-size: 1rem;
+  }
+  .related-item span {
+    font-weight: 600;
+    color: #b71c1c;
+  }
 </style>
 </head>
 <body>
 
-<main id="productDetails"></main>
+<header id="siteHeader">ARZA Shop</header>
+
+<main id="productDetails" aria-live="polite"></main>
+
+<section id="relatedProducts" class="related" aria-label="Related Products"></section>
 
 <script>
-  // Product data
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
+
   const products = {
     phantom: {
       name: 'ARZA Phantom',
       specs: ['Ryzen 7 7700X', 'RTX 4070 Ti', '32GB DDR5', '2TB NVMe SSD'],
-      basePrice: 2899, // Includes 2-year warranty price baked in
+      basePrice: 2899,
       image: 'https://example.com/images/phantom.jpg',
-      desc: 'A balanced powerhouse built for gamers and creators. Handles AAA gaming and multi-app workflows with ease.'
+      desc: 'A balanced powerhouse built for gamers and creators. Handles AAA gaming and multi-app workflows with ease.',
+      type: 'desktop'
     },
     titan: {
       name: 'ARZA Titan X',
       specs: ['Intel i9-14900K', 'RTX 4090', '64GB DDR5', '4TB NVMe SSD'],
       basePrice: 4999,
       image: 'https://example.com/images/titan.jpg',
-      desc: 'Maxed out with flagship components. Perfect for 4K gaming, AI, and high-performance dev work.'
+      desc: 'Maxed out with flagship components. Perfect for 4K gaming, AI, and high-performance dev work.',
+      type: 'desktop'
     },
     nova: {
       name: 'ARZA Nova',
       specs: ['Ryzen 9 7900X', 'RTX 4080', '32GB DDR5', '2TB NVMe SSD'],
       basePrice: 3799,
       image: 'https://example.com/images/nova.jpg',
-      desc: 'Reliable high-performance system with elite multitasking capability. Ideal for creatives and engineers.'
+      desc: 'Reliable high-performance system with elite multitasking capability. Ideal for creatives and engineers.',
+      type: 'desktop'
     }
   };
 
-  const params = new URLSearchParams(window.location.search);
-  const id = params.get('id');
-
   if (!id || !products[id]) {
     document.getElementById('productDetails').innerHTML = `<p style="color:#ff4747; font-weight:700; text-align:center;">Product not found. Please check the link.</p>`;
+    document.title = "ARZA Shop | Product Not Found";
   } else {
     const product = products[id];
+    document.title = `ARZA Shop | ${product.name}`;
+
+    const specsList = product.specs.map(s => `<li>${s}</li>`).join('');
 
     document.getElementById('productDetails').innerHTML = `
       <div class="product-card" role="region" aria-label="${product.name} details">
         <img src="${product.image}" alt="${product.name}" class="product-image" />
         <h1>${product.name}</h1>
         <p class="desc">${product.desc}</p>
-        <ul class="specs" aria-label="Specifications">
-          ${product.specs.map(spec => `<li>${spec}</li>`).join('')}
-        </ul>
+        <ul class="specs" aria-label="Specifications">${specsList}</ul>
+
         <div class="os-selector">
           <label for="osSelect">Choose Operating System <span aria-hidden="true" style="color:red;">*</span></label>
           <select id="osSelect" aria-required="true" required>
@@ -184,76 +240,123 @@
       </div>
     `;
 
+    // Related Products
+    const related = Object.entries(products)
+      .filter(([key, p]) => key !== id && p.type === product.type)
+      .map(([key, p]) => `
+        <div class="related-item" onclick="location.href='product.html?id=${key}'" tabindex="0" role="link" aria-label="View ${p.name}">
+          <img src="${p.image}" alt="${p.name}" />
+          <h4>${p.name}</h4>
+          <span>${p.basePrice.toLocaleString('en-US', {style:'currency', currency:'USD'})}</span>
+        </div>
+      `).join('');
+    document.getElementById('relatedProducts').innerHTML = `
+      <h2>Related Products</h2>
+      <div class="related-grid" role="list">${related}</div>
+    `;
+
+    // Logic to show/hide Windows or Linux fields and update price
     const osSelect = document.getElementById('osSelect');
-    const windowsVersion = document.getElementById('windowsVersion');
-    const linuxVersion = document.getElementById('linuxVersion');
+    const windowsSelect = document.getElementById('windowsVersion');
+    const linuxInput = document.getElementById('linuxVersion');
     const winLabel = document.getElementById('winLabel');
     const linuxLabel = document.getElementById('linuxLabel');
     const priceDisplay = document.querySelector('.price');
     const buyBtn = document.querySelector('.buy-btn');
 
-    function updateUI() {
-      const os = osSelect.value;
-      if (os === 'Windows') {
-        windowsVersion.style.display = 'block';
-        winLabel.style.display = 'block';
-        linuxVersion.style.display = 'none';
-        linuxLabel.style.display = 'none';
-        linuxVersion.value = '';
-      } else if (os === 'Linux') {
-        windowsVersion.style.display = 'none';
-        winLabel.style.display = 'none';
-        windowsVersion.value = '';
-        linuxVersion.style.display = 'block';
-        linuxLabel.style.display = 'block';
-      } else {
-        windowsVersion.style.display = 'none';
-        winLabel.style.display = 'none';
-        windowsVersion.value = '';
-        linuxVersion.style.display = 'none';
-        linuxLabel.style.display = 'none';
-        linuxVersion.value = '';
-      }
-      updatePrice();
-      checkValidity();
-    }
+    let currentPrice = product.basePrice;
 
     function updatePrice() {
-      let finalPrice = product.basePrice;
-      if (osSelect.value === 'Windows' && windowsVersion.value) {
-        const selectedOption = windowsVersion.querySelector(`option[value="${windowsVersion.value}"]`);
-        if (selectedOption && selectedOption.dataset.price) {
-          finalPrice += Number(selectedOption.dataset.price);
+      let osPrice = 0;
+
+      if (osSelect.value === 'Windows') {
+        const winOption = windowsSelect.options[windowsSelect.selectedIndex];
+        if (winOption && winOption.dataset && winOption.dataset.price) {
+          osPrice = parseFloat(winOption.dataset.price);
         }
       }
-      priceDisplay.textContent = `$${finalPrice.toFixed(2)}`;
+      // Linux distro free, no extra cost
+
+      currentPrice = product.basePrice + osPrice;
+      priceDisplay.textContent = `$${currentPrice.toFixed(2)}`;
     }
 
-    function checkValidity() {
-      let valid = false;
+    function validate() {
+      if (!osSelect.value) return false;
+
+      if (osSelect.value === 'Windows' && !windowsSelect.value) return false;
+      if (osSelect.value === 'Linux' && !linuxInput.value.trim()) return false;
+
+      return true;
+    }
+
+    function toggleFields() {
       if (osSelect.value === 'Windows') {
-        valid = windowsVersion.value && windowsVersion.value !== '';
+        windowsSelect.style.display = 'block';
+        winLabel.style.display = 'block';
+        windowsSelect.required = true;
+
+        linuxInput.style.display = 'none';
+        linuxLabel.style.display = 'none';
+        linuxInput.required = false;
+        linuxInput.value = '';
       } else if (osSelect.value === 'Linux') {
-        valid = linuxVersion.value.trim() !== '';
+        linuxInput.style.display = 'block';
+        linuxLabel.style.display = 'block';
+        linuxInput.required = true;
+
+        windowsSelect.style.display = 'none';
+        winLabel.style.display = 'none';
+        windowsSelect.required = false;
+        windowsSelect.value = '';
+      } else {
+        windowsSelect.style.display = 'none';
+        winLabel.style.display = 'none';
+        windowsSelect.required = false;
+        windowsSelect.value = '';
+
+        linuxInput.style.display = 'none';
+        linuxLabel.style.display = 'none';
+        linuxInput.required = false;
+        linuxInput.value = '';
       }
-      buyBtn.disabled = !valid;
-      buyBtn.setAttribute('aria-disabled', (!valid).toString());
+      updatePrice();
+      buyBtn.disabled = !validate();
+      buyBtn.setAttribute('aria-disabled', buyBtn.disabled);
     }
 
     osSelect.addEventListener('change', () => {
-      updateUI();
+      toggleFields();
     });
 
-    windowsVersion.addEventListener('change', () => {
+    windowsSelect.addEventListener('change', () => {
       updatePrice();
-      checkValidity();
+      buyBtn.disabled = !validate();
+      buyBtn.setAttribute('aria-disabled', buyBtn.disabled);
     });
 
-    linuxVersion.addEventListener('input', () => {
-      checkValidity();
+    linuxInput.addEventListener('input', () => {
+      buyBtn.disabled = !validate();
+      buyBtn.setAttribute('aria-disabled', buyBtn.disabled);
     });
+
+    buyBtn.addEventListener('click', () => {
+      if (!validate()) return;
+
+      const selection = {
+        productId: id,
+        productName: product.name,
+        os: osSelect.value,
+        osVersion: osSelect.value === 'Windows' ? windowsSelect.value : linuxInput.value.trim(),
+        price: currentPrice
+      };
+
+      alert(`Added to cart:\n${JSON.stringify(selection, null, 2)}`);
+      // Push this to your cart system here
+    });
+
+    toggleFields();
   }
 </script>
-
 </body>
 </html>
