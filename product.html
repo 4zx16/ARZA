@@ -26,202 +26,148 @@
   const params = new URLSearchParams(window.location.search);
   const id = params.get('id');
 
-  const products = {
-    phantom: {
-      name: 'ARZA Phantom',
-      specs: ['Ryzen 7 7700X', 'RTX 4070 Ti', '32GB DDR5', '2TB NVMe SSD'],
-      basePrice: 2899,
-      image: 'https://example.com/images/phantom.jpg',
-      desc: 'A balanced powerhouse built for gamers and creators. Handles AAA gaming and multi-app workflows with ease.',
-      type: 'desktop'
-    },
-    titan: {
-      name: 'ARZA Titan X',
-      specs: ['Intel i9-14900K', 'RTX 4090', '64GB DDR5', '4TB NVMe SSD'],
-      basePrice: 4999,
-      image: 'https://example.com/images/titan.jpg',
-      desc: 'Maxed out with flagship components. Perfect for 4K gaming, AI, and high-performance dev work.',
-      type: 'desktop'
-    },
-    nova: {
-      name: 'ARZA Nova',
-      specs: ['Ryzen 9 7900X', 'RTX 4080', '32GB DDR5', '2TB NVMe SSD'],
-      basePrice: 3799,
-      image: 'https://example.com/images/nova.jpg',
-      desc: 'Reliable high-performance system with elite multitasking capability. Ideal for creatives and engineers.',
-      type: 'desktop'
-    }
-  };
-
-  if (!id || !products[id]) {
-    document.getElementById('productDetails').innerHTML = `<p style="color:#ff4747; font-weight:700; text-align:center;">Product not found. Please check the link.</p>`;
-    document.title = "ARZA Shop | Product Not Found";
-  } else {
-    const product = products[id];
-    document.title = `ARZA Shop | ${product.name}`;
-
-    const specsList = product.specs.map(s => `<li>${s}</li>`).join('');
-
-    document.getElementById('productDetails').innerHTML = `
-      <div class="product-card" role="region" aria-label="${product.name} details">
-        <img src="${product.image}" alt="${product.name}" class="product-image" />
-        <h1>${product.name}</h1>
-        <p class="desc">${product.desc}</p>
-        <ul class="specs" aria-label="Specifications">${specsList}</ul>
-
-        <div class="os-selector">
-          <label for="osSelect">Choose Operating System <span aria-hidden="true" style="color:red;">*</span></label>
-          <select id="osSelect" aria-required="true" required>
-            <option value="" selected disabled>Select OS</option>
-            <option value="Windows">Windows</option>
-            <option value="Linux">Linux</option>
-          </select>
-
-<div id="windowsOptions" class="os-sub-options" style="display: none;">
-  <label for="windowsEdition">Select Windows Edition:</label>
-  <select id="windowsEdition" required>
-    <option value="" disabled selected>Select Edition</option>
-    <option value="Home">Windows 11 Home</option>
-    <option value="Pro">Windows 11 Pro</option>
-    <option value="Education">Windows 11 Education</option>
-  </select>
-
-  <div class="checkbox-wrap">
-    <input type="checkbox" id="dontActivateCheckbox">
-    <label for="dontActivateCheckbox">Don't activate Windows (I’ll do it myself)</label>
-  </div>
-</div>
-          <label for="linuxVersion" id="linuxLabel" style="display:none;">Enter Linux distro/version <span aria-hidden="true" style="color:red;">*</span></label>
-          <input type="text" id="linuxVersion" aria-required="true" placeholder="e.g. Ubuntu 22.04" style="display:none;" />
-          <small>Note: 2-year warranty is included in the price. Windows editions add to the base price. Linux is free.</small>
-        </div>
-
-        <div class="price" aria-live="polite">$${product.basePrice.toFixed(2)}</div>
-        <button class="buy-btn" disabled aria-disabled="true">Add to Cart</button>
-      </div>
-    `;
-
-    // Related Products
-    const related = Object.entries(products)
-      .filter(([key, p]) => key !== id && p.type === product.type)
-      .map(([key, p]) => `
-        <div class="related-item" onclick="location.href='product.html?id=${key}'" tabindex="0" role="link" aria-label="View ${p.name}">
-          <img src="${p.image}" alt="${p.name}" />
-          <h4>${p.name}</h4>
-          <span>${p.basePrice.toLocaleString('en-US', {style:'currency', currency:'USD'})}</span>
-        </div>
-      `).join('');
-    document.getElementById('relatedProducts').innerHTML = `
-      <h2>Related Products</h2>
-      <div class="related-grid" role="list">${related}</div>
-    `;
-    const osSelect = document.getElementById('osSelect');
-    const windowsSelect = document.getElementById('windowsVersion');
-    const linuxInput = document.getElementById('linuxVersion');
-    const winLabel = document.getElementById('winLabel');
-    const linuxLabel = document.getElementById('linuxLabel');
-    const priceDisplay = document.querySelector('.price');
-    const buyBtn = document.querySelector('.buy-btn');
-    let basePrice = parseInt(product.price.replace(/\D/g, ''));
-
-    function updateVisibility() {
-  const os = osSelect.value;
-  winLabel.style.display = os === 'Windows' ? 'block' : 'none';
-  linuxLabel.style.display = os === 'Linux' ? 'block' : 'none';
-  updatePrice();
-}
-    
-  function updatePrice() {
-  let osFee = 0;
-  if (osSelect.value === 'Windows' && !dontActivate.checked) {
-    osFee = 60;
-  }
-  priceDisplay.textContent = `$${(basePrice + osFee).toLocaleString()}`;
-}
-osSelect.addEventListener('change', updateVisibility);
-windowsSelect.addEventListener('change', updatePrice);
-linuxInput.addEventListener('input', updatePrice);
-dontActivate.addEventListener('change', updatePrice);
-      // Linux distro free, no extra cost
-
-      currentPrice = product.basePrice + osPrice;
-      priceDisplay.textContent = `$${currentPrice.toFixed(2)}`;
-    }
-
-    function validate() {
-      if (!osSelect.value) return false;
-
-      if (osSelect.value === 'Windows' && !windowsSelect.value) return false;
-      if (osSelect.value === 'Linux' && !linuxInput.value.trim()) return false;
-
-      return true;
-    }
-
-    function toggleFields() {
-      if (osSelect.value === 'Windows') {
-        windowsSelect.style.display = 'block';
-        winLabel.style.display = 'block';
-        windowsSelect.required = true;
-
-        linuxInput.style.display = 'none';
-        linuxLabel.style.display = 'none';
-        linuxInput.required = false;
-        linuxInput.value = '';
-      } else if (osSelect.value === 'Linux') {
-        linuxInput.style.display = 'block';
-        linuxLabel.style.display = 'block';
-        linuxInput.required = true;
-
-        windowsSelect.style.display = 'none';
-        winLabel.style.display = 'none';
-        windowsSelect.required = false;
-        windowsSelect.value = '';
-      } else {
-        windowsSelect.style.display = 'none';
-        winLabel.style.display = 'none';
-        windowsSelect.required = false;
-        windowsSelect.value = '';
-
-        linuxInput.style.display = 'none';
-        linuxLabel.style.display = 'none';
-        linuxInput.required = false;
-        linuxInput.value = '';
+  fetch('products.json')
+    .then(res => res.json())
+    .then(products => {
+      if (!id || !products[id]) {
+        document.getElementById('productDetails').innerHTML = `<p style="color:#ff4747; font-weight:700; text-align:center;">Product not found. Please check the link.</p>`;
+        document.title = "ARZA Shop | Product Not Found";
+        return;
       }
-      updatePrice();
-      buyBtn.disabled = !validate();
-      buyBtn.setAttribute('aria-disabled', buyBtn.disabled);
-    }
 
-    osSelect.addEventListener('change', () => {
-      toggleFields();
+      const product = products[id];
+      document.title = `ARZA Shop | ${product.name}`;
+
+      const specsList = product.specs.map(s => `<li>${s}</li>`).join('');
+
+      document.getElementById('productDetails').innerHTML = `
+        <div class="product-card" role="region" aria-label="${product.name} details">
+          <img src="${product.image}" alt="${product.name}" class="product-image" />
+          <h1>${product.name}</h1>
+          <p class="desc">${product.desc}</p>
+          <ul class="specs" aria-label="Specifications">${specsList}</ul>
+
+          <div class="os-selector">
+            <label for="osSelect">Choose Operating System <span aria-hidden="true" style="color:red;">*</span></label>
+            <select id="osSelect" required>
+              <option value="" selected disabled>Select OS</option>
+              <option value="Windows">Windows</option>
+              <option value="Linux">Linux</option>
+            </select>
+
+            <div id="windowsOptions" class="os-sub-options" style="display: none;">
+              <label for="windowsEdition">Select Windows Edition:</label>
+              <select id="windowsEdition">
+                <option value="" disabled selected>Select Edition</option>
+                <option value="Home">Windows 11 Home</option>
+                <option value="Pro">Windows 11 Pro</option>
+                <option value="Education">Windows 11 Education</option>
+              </select>
+
+              <div class="checkbox-wrap">
+                <input type="checkbox" id="dontActivateCheckbox">
+                <label for="dontActivateCheckbox">Don't activate Windows (I’ll do it myself)</label>
+              </div>
+            </div>
+
+            <label for="linuxVersion" id="linuxLabel" style="display:none;">Enter Linux distro/version <span aria-hidden="true" style="color:red;">*</span></label>
+            <input type="text" id="linuxVersion" placeholder="e.g. Ubuntu 22.04" style="display:none;" />
+            <small>Note: 2-year warranty is included in the price. Windows editions add to the base price. Linux is free.</small>
+          </div>
+
+          <div class="price" aria-live="polite">$${product.basePrice.toFixed(2)}</div>
+          <button class="buy-btn" disabled aria-disabled="true">Add to Cart</button>
+        </div>
+      `;
+
+      // Related products
+      const relatedHTML = Object.entries(products)
+        .filter(([key, p]) => key !== id && p.type === product.type)
+        .map(([key, p]) => `
+          <div class="related-item" onclick="location.href='product.html?id=${key}'" tabindex="0" role="link" aria-label="View ${p.name}">
+            <img src="${p.image}" alt="${p.name}" />
+            <h4>${p.name}</h4>
+            <span>${p.basePrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</span>
+          </div>
+        `).join('');
+      document.getElementById('relatedProducts').innerHTML = `
+        <h2>Related Products</h2>
+        <div class="related-grid" role="list">${relatedHTML}</div>
+      `;
+
+      // Interactivity
+      const osSelect = document.getElementById('osSelect');
+      const windowsEdition = document.getElementById('windowsEdition');
+      const dontActivate = document.getElementById('dontActivateCheckbox');
+      const linuxInput = document.getElementById('linuxVersion');
+      const linuxLabel = document.getElementById('linuxLabel');
+      const windowsOptions = document.getElementById('windowsOptions');
+      const priceDisplay = document.querySelector('.price');
+      const buyBtn = document.querySelector('.buy-btn');
+
+      let basePrice = product.basePrice;
+      let currentPrice = basePrice;
+
+      function updateUI() {
+        const os = osSelect.value;
+
+        if (os === 'Windows') {
+          windowsOptions.style.display = 'block';
+          linuxInput.style.display = 'none';
+          linuxLabel.style.display = 'none';
+        } else if (os === 'Linux') {
+          windowsOptions.style.display = 'none';
+          linuxInput.style.display = 'block';
+          linuxLabel.style.display = 'block';
+        } else {
+          windowsOptions.style.display = 'none';
+          linuxInput.style.display = 'none';
+          linuxLabel.style.display = 'none';
+        }
+
+        // Price update
+        const osFee = (os === 'Windows' && !dontActivate.checked) ? 60 : 0;
+        currentPrice = basePrice + osFee;
+        priceDisplay.textContent = `$${currentPrice.toFixed(2)}`;
+
+        // Enable/Disable button
+        buyBtn.disabled = !validate();
+        buyBtn.setAttribute('aria-disabled', buyBtn.disabled);
+      }
+
+      function validate() {
+        const os = osSelect.value;
+        if (!os) return false;
+        if (os === 'Windows' && !windowsEdition.value) return false;
+        if (os === 'Linux' && !linuxInput.value.trim()) return false;
+        return true;
+      }
+
+      osSelect.addEventListener('change', updateUI);
+      windowsEdition.addEventListener('change', updateUI);
+      linuxInput.addEventListener('input', updateUI);
+      dontActivate.addEventListener('change', updateUI);
+
+      buyBtn.addEventListener('click', () => {
+        if (!validate()) return;
+
+        const selection = {
+          productId: id,
+          productName: product.name,
+          os: osSelect.value,
+          osVersion: osSelect.value === 'Windows' ? windowsEdition.value : linuxInput.value.trim(),
+          price: currentPrice
+        };
+        alert(`Added to cart:\n${JSON.stringify(selection, null, 2)}`);
+        // TODO: Push to cart system here
+      });
+
+      updateUI();
+    })
+    .catch(err => {
+      console.error('Failed to load products:', err);
+      document.getElementById('productDetails').innerHTML = `<p style="color:#ff4747; font-weight:700; text-align:center;">Error loading product data.</p>`;
     });
-
-    windowsSelect.addEventListener('change', () => {
-      updatePrice();
-      buyBtn.disabled = !validate();
-      buyBtn.setAttribute('aria-disabled', buyBtn.disabled);
-    });
-
-    linuxInput.addEventListener('input', () => {
-      buyBtn.disabled = !validate();
-      buyBtn.setAttribute('aria-disabled', buyBtn.disabled);
-    });
-
-    buyBtn.addEventListener('click', () => {
-      if (!validate()) return;
-
-      const selection = {
-        productId: id,
-        productName: product.name,
-        os: osSelect.value,
-        osVersion: osSelect.value === 'Windows' ? windowsSelect.value : linuxInput.value.trim(),
-        price: currentPrice
-      };
-      alert(`Added to cart:\n${JSON.stringify(selection, null, 2)}`);
-      // Push this to your cart system here
-    });
-    toggleFields();
-  }
 </script>
 </body>
 </html>
