@@ -9,248 +9,176 @@
   <meta name="description" content="Find the perfect desktop or laptop for gaming, dev, creative, and more." />
   <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/1160008247755948164/1377147823530704896/tG_JYV9N_400x400.png?ex=6837e85b&is=683696db&hm=a3775f237f480ee4ba570ea31d80aeda47dd89186f78a42b95aeb81b1bb6c9d4&">
   <style>
-    /* Global & Reset */
-    * {
+/* Center product card */
+    main#productDetails {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem 1rem;
+      min-height: 80vh;
       box-sizing: border-box;
     }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #111;
-      color: #eee;
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    header {
-      background: #b01a1a;
+
+    .product-card {
+      max-width: 650px;
       width: 100%;
-      padding: 1rem 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 2px 8px rgba(176, 26, 26, 0.7);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-    header .logo {
-      font-weight: 900;
-      font-size: 1.8rem;
-      letter-spacing: 3px;
-      color: #fff;
-      cursor: default;
-      user-select: none;
-    }
-    nav {
-      display: flex;
-      gap: 1.5rem;
-    }
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: 600;
-      padding: 0.3rem 0.6rem;
-      border-radius: 4px;
-      transition: background-color 0.3s ease, color 0.3s ease;
-      user-select: none;
-    }
-    nav a:hover {
-      background: #ff4747;
-      color: #111;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 1.5rem 2rem;
+      box-shadow: 0 4px 15px rgb(0 0 0 / 0.1);
+      background-color: #fff;
+      text-align: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    main {
-      max-width: 900px;
-      width: 100%;
-      margin: 2rem auto 3rem auto;
-      padding: 0 1rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-    }
-    .product-card {
-      background: #1a1a1a;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 0 25px rgba(176, 26, 26, 0.8);
-      display: flex;
-      flex-wrap: wrap;
-      max-width: 900px;
-      width: 100%;
-      justify-content: center;
-      align-items: center;
-      gap: 2rem;
-      padding: 2rem;
-    }
     .product-image {
-      flex: 1 1 300px;
-      max-width: 350px;
-      border-radius: 10px;
-      object-fit: contain;
-      user-select: none;
-      filter: drop-shadow(0 0 8px #b01a1a);
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+      margin-bottom: 1rem;
     }
-    .product-info {
-      flex: 1 1 400px;
-      color: #eee;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      gap: 1rem;
-    }
+
     .product-info h1 {
-      margin: 0;
-      font-weight: 800;
-      color: #ff4747;
-      font-size: 2.5rem;
-      user-select: none;
+      margin: 0 0 0.5rem;
+      font-weight: 700;
+      color: #b71c1c; /* ARZA red */
     }
-    .desc {
-      font-size: 1.1rem;
-      line-height: 1.5;
-      color: #ccc;
-      max-width: 450px;
-    }
-    .specs {
-      list-style: none;
-      padding-left: 0;
-      margin: 0;
-      color: #bbb;
+
+    .product-info .desc {
       font-size: 1rem;
-      user-select: none;
+      margin-bottom: 1rem;
+      color: #333;
     }
+
+    .specs {
+      list-style-type: none;
+      padding: 0;
+      margin: 0 0 1rem 0;
+      color: #555;
+      font-size: 0.95rem;
+    }
+
     .specs li {
+      margin-bottom: 0.4rem;
+    }
+
+    .os-selector {
+      margin-bottom: 1rem;
+      text-align: left;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .os-selector label,
+    .os-selector select,
+    .os-selector input {
+      width: 100%;
+      display: block;
+      font-size: 1rem;
       margin-bottom: 0.5rem;
     }
-    .os-selector {
-      width: 100%;
-      max-width: 400px;
-      margin-top: 1.5rem;
-      text-align: left;
-    }
-    .os-selector label {
+
+    .os-selector small {
+      color: #777;
+      font-size: 0.85rem;
       display: block;
-      margin-bottom: 0.4rem;
-      font-weight: 700;
-      color: #eee;
-      user-select: none;
+      margin-top: -0.5rem;
+      margin-bottom: 1rem;
     }
-    select, input[type="text"] {
-      width: 100%;
-      padding: 0.5rem 0.8rem;
-      font-size: 1rem;
-      border-radius: 6px;
-      border: 2px solid #b01a1a;
-      background: #222;
-      color: #eee;
-      transition: border-color 0.3s ease;
-    }
-    select:focus, input[type="text"]:focus {
-      outline: none;
-      border-color: #ff4747;
-      background: #2a2a2a;
-    }
+
     .price {
-      font-size: 2rem;
-      font-weight: 900;
-      color: #ff4747;
-      margin-top: 2rem;
-      user-select: none;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #b71c1c;
+      margin-bottom: 1.5rem;
     }
+
     .buy-btn {
-      margin-top: 2rem;
-      padding: 0.85rem 2rem;
-      font-size: 1.2rem;
-      font-weight: 900;
+      background-color: #b71c1c;
       color: #fff;
-      background: #b01a1a;
       border: none;
-      border-radius: 8px;
+      padding: 0.75rem 2rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border-radius: 6px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
-      user-select: none;
+      transition: background-color 0.25s ease;
       width: 100%;
       max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
     }
-    .buy-btn:disabled {
-      background: #660808;
+
+    .buy-btn:disabled,
+    .buy-btn[aria-disabled="true"] {
+      background-color: #ccc;
       cursor: not-allowed;
-      opacity: 0.7;
-    }
-    .buy-btn:not(:disabled):hover {
-      background: #ff4747;
     }
 
     /* Related products */
     #relatedProducts {
       max-width: 900px;
-      width: 100%;
-      margin: 0 auto 4rem auto;
+      margin: 2rem auto 3rem;
       padding: 0 1rem;
-      color: #eee;
       text-align: center;
     }
+
     #relatedProducts h2 {
+      color: #b71c1c;
+      font-weight: 700;
       margin-bottom: 1rem;
-      color: #ff4747;
-      font-weight: 700;
-      user-select: none;
-    }
-    .related-grid {
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-    }
-    .related-item {
-      flex: 1 1 30%;
-      background: #1a1a1a;
-      border-radius: 8px;
-      padding: 1rem;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      color: #eee;
-      user-select: none;
-    }
-    .related-item:hover {
-      background: #b01a1a;
-    }
-    .related-item img {
-      max-width: 100%;
-      border-radius: 6px;
-      margin-bottom: 0.6rem;
-      object-fit: cover;
-      filter: drop-shadow(0 0 5px #b01a1a);
-    }
-    .related-item h4 {
-      margin: 0.4rem 0;
-      font-weight: 700;
-      color: #ff4747;
-    }
-    .related-item span {
-      color: #eee;
-      font-weight: 700;
     }
 
-    /* Responsive tweak */
-    @media (max-width: 768px) {
+    .related-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .related-item {
+      width: 180px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 0.75rem;
+      box-shadow: 0 2px 10px rgb(0 0 0 / 0.05);
+      cursor: pointer;
+      transition: box-shadow 0.3s ease;
+      background: #fff;
+    }
+
+    .related-item:hover,
+    .related-item:focus {
+      box-shadow: 0 6px 15px rgb(183 28 28 / 0.4);
+      outline: none;
+    }
+
+    .related-item img {
+      max-width: 100%;
+      border-radius: 4px;
+      margin-bottom: 0.5rem;
+    }
+
+    .related-item h4 {
+      font-size: 1rem;
+      margin: 0.25rem 0;
+      color: #333;
+    }
+
+    .related-item span {
+      font-weight: 700;
+      color: #b71c1c;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
       .product-card {
-        flex-direction: column;
-        padding: 1.5rem;
+        padding: 1rem 1.5rem;
       }
-      .product-image, .product-info {
-        flex: none;
-        max-width: 100%;
-        width: 100%;
-      }
-      .product-info h1 {
-        font-size: 2rem;
+      .related-item {
+        width: 140px;
       }
       .buy-btn {
         max-width: 100%;
@@ -331,16 +259,28 @@
               ${product.specs.map(spec => `<li>${spec}</li>`).join('')}
             </ul>
 
-            <div class="os-selector">
-              <label for="osSelect">Choose Operating System:</label>
-              <select id="osSelect" aria-describedby="osHelp">
-                <option value="none" selected disabled>Select OS</option>
-                <option value="Windows">Windows (extra $150)</option>
-                <option value="Linux">Linux (specify)</option>
-              </select>
-              <input type="text" id="linuxVersion" placeholder="Enter Linux distro/version" style="display:none; margin-top:8px;" aria-label="Linux version input"/>
-              <small id="osHelp" style="color:#bbb;">Windows adds $150. Linux is free but specify distro/version.</small>
-            </div>
+       <!-- Inside .product-info -->
+<div class="os-selector" style="width:100%; max-width:400px; margin-top:1.5rem; text-align:left;">
+  <label for="osSelect">Choose Operating System:</label>
+  <select id="osSelect" aria-describedby="osHelp" required>
+    <option value="none" selected disabled>Select OS</option>
+    <option value="Windows">Windows</option>
+    <option value="Linux">Linux</option>
+  </select>
+
+  <select id="windowsVersion" style="display:none; margin-top:8px;" aria-label="Select Windows Edition" required>
+    <option value="none" selected disabled>Select Windows Edition</option>
+    <option value="Home" data-price="150">Windows 11 Home (+$150)</option>
+    <option value="Pro" data-price="250">Windows 11 Pro (+$250)</option>
+    <option value="Education" data-price="200">Windows 11 Education (+$200)</option>
+  </select>
+
+  <input type="text" id="linuxVersion" placeholder="Enter Linux distro/version" style="display:none; margin-top:8px;" aria-label="Linux version input" />
+
+  <small id="osHelp" style="color:#bbb;">
+    Windows editions have different prices. Linux is free but specify distro/version.
+  </small>
+</div>
 
             <div class="price" aria-live="polite">$${product.basePrice.toFixed(2)}</div>
             <button class="buy-btn" disabled aria-disabled="true">Add to Cart</button>
