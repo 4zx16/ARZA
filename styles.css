@@ -1,122 +1,247 @@
-/* ==== Global Site Theme (Professional ARZA Style) ==== */
-html {
+/* ====== ARZA Global Styles ====== */
+:root {
+  --accent: #ff3d3d;
+  --hover: #ff6464;
+  --text: #eaeaea;
+  --muted: #bbbbbb;
+  --bg: #0a0a0a;
+  --panel: #131313;
+  --border: #222;
+  --shadow: rgba(255, 61, 61, 0.15);
+  --font-main: "Segoe UI", "Ubuntu", "Roboto", sans-serif;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-main);
+  background-color: var(--bg);
+  color: var(--text);
   scroll-behavior: smooth;
 }
 
-:root {
-  --accent: #ff4747;
-  --hover: #ff6b6b;
-  --text: #f0f0f0;
-  --bg: #0b0b0b;
-  --border: #2a2a2a;
-  --panel: #181818;
-}
-
-body {
-  background-color: var(--bg);
-  color: var(--text);
-  font-family: "Segoe UI", Roboto, sans-serif;
-  margin: 0;
-  padding: 0;
-}
-
-/* ==== Header & Nav ==== */
+/* ====== Header ====== */
 header {
-  background-color: #111;
-  padding: 1rem 2rem;
+  background: #0e0e0e;
+  border-bottom: 1px solid var(--border);
+  padding: 1.2rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid var(--border);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 100;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
 }
 
 .logo {
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: 900;
   color: var(--accent);
-  letter-spacing: 1px;
-  user-select: none;
+  text-transform: uppercase;
+  letter-spacing: 2px;
   text-shadow: 0 0 8px var(--hover);
+  user-select: none;
 }
 
 nav {
   display: flex;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
 nav a {
   color: var(--text);
   text-decoration: none;
   font-weight: 600;
-  transition: color 0.2s ease;
   position: relative;
+  transition: color 0.3s ease;
 }
 
 nav a::after {
-  content: "";
+  content: '';
   position: absolute;
-  width: 0;
-  height: 2px;
-  bottom: -4px;
   left: 0;
+  bottom: -4px;
+  height: 2px;
+  width: 0%;
   background-color: var(--accent);
-  transition: width 0.2s ease;
+  transition: width 0.3s ease;
 }
 
-nav a:hover,
-nav a.active {
+nav a:hover, nav a.active {
   color: var(--accent);
 }
 
-nav a:hover::after,
-nav a.active::after {
+nav a:hover::after, nav a.active::after {
   width: 100%;
 }
 
-/* ==== Mobile Nav Support ==== */
+/* ====== Hero Section ====== */
+.page-hero {
+  background: linear-gradient(to bottom, #0b0b0b 30%, #131313);
+  text-align: center;
+  padding: 5rem 2rem 3rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.page-hero h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+}
+
+.page-hero p {
+  font-size: 1.2rem;
+  color: var(--muted);
+}
+
+/* ====== Quiz Section ====== */
+#quizWrapper {
+  background: var(--panel);
+  padding: 2.5rem;
+  margin: 2rem auto;
+  width: 95%;
+  max-width: 900px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px var(--shadow);
+}
+
+#quizWrapper h2 {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.question {
+  margin-bottom: 1.8rem;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+select {
+  width: 100%;
+  padding: 0.9rem;
+  font-size: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #0e0e0e;
+  color: var(--text);
+}
+
+/* ====== Buttons ====== */
+#filterButtons {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+button {
+  padding: 0.9rem 1.8rem;
+  font-size: 1rem;
+  font-weight: bold;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background: var(--hover);
+  transform: scale(1.05);
+}
+
+/* ====== Product Grid ====== */
+#productGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  padding: 3rem 2rem;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.product {
+  background: #141414;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 0 12px var(--shadow);
+  transition: all 0.3s ease;
+}
+
+.product:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 24px rgba(255, 61, 61, 0.35);
+}
+
+.product img {
+  max-width: 100%;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+.product h3 {
+  font-size: 1.5rem;
+  color: var(--text);
+  margin-bottom: 0.6rem;
+}
+
+.product p {
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin-bottom: 1rem;
+  min-height: 60px;
+}
+
+.product span {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* ====== Mobile Navigation ====== */
 .nav-toggle {
   display: none;
 }
 
 .nav-toggle-label {
   display: none;
-  cursor: pointer;
-  width: 32px;
-  height: 32px;
   flex-direction: column;
+  cursor: pointer;
+  height: 24px;
   justify-content: space-between;
-  align-items: center;
   padding: 0.5rem;
-  z-index: 1001;
 }
 
 .nav-toggle-label span,
 .nav-toggle-label span::before,
 .nav-toggle-label span::after {
-  display: block;
+  content: '';
   background: var(--text);
+  display: block;
   height: 3px;
-  width: 100%;
+  width: 28px;
   border-radius: 2px;
   position: relative;
   transition: all 0.3s ease;
 }
 
-.nav-toggle-label span::before,
-.nav-toggle-label span::after {
-  content: '';
-  position: absolute;
-}
-
 .nav-toggle-label span::before {
+  position: absolute;
   top: -8px;
 }
 
 .nav-toggle-label span::after {
+  position: absolute;
   top: 8px;
 }
 
@@ -140,17 +265,17 @@ nav a.active::after {
   }
 
   nav {
+    flex-direction: column;
     position: fixed;
     top: 64px;
     right: 0;
-    background: #111;
+    background: #0f0f0f;
     width: 100%;
     max-width: 300px;
     height: 100vh;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 2rem;
     transform: translateX(100%);
+    padding: 2rem;
+    gap: 1rem;
     transition: transform 0.3s ease;
     box-shadow: -4px 0 10px rgba(0, 0, 0, 0.7);
   }
@@ -160,145 +285,24 @@ nav a.active::after {
   }
 
   nav a {
-    padding: 1rem 0;
-    width: 100%;
-    text-align: left;
     font-size: 1.1rem;
     border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
   }
 }
 
-/* ==== Hero ==== */
-.page-hero {
-  text-align: center;
-  padding: 4rem 2rem 2rem;
+/* ====== Branding Gradient ====== */
+.arza-gradient {
+  background: linear-gradient(90deg, #ff2e2e, #ff5b5b, #cc1c1c);
+  background-size: 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: pulseRed 5s ease infinite;
+  font-weight: 900;
 }
 
-.page-hero h1 {
-  font-size: 2.8rem;
-  margin-bottom: 1rem;
-}
-
-/* ==== Quiz Wrapper ==== */
-#quizWrapper {
-  background: var(--panel);
-  padding: 2rem;
-  margin: 2rem auto;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 800px;
-  box-shadow: 0 0 20px rgba(255, 71, 71, 0.2);
-}
-
-#quizWrapper.collapsed {
-  display: none;
-}
-
-.question {
-  margin-bottom: 1.5rem;
-}
-
-label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-}
-
-select {
-  width: 100%;
-  padding: 0.8rem;
-  background: var(--bg);
-  color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-}
-
-/* ==== Buttons ==== */
-#filterButtons {
-  text-align: center;
-  margin-top: 1.5rem;
-}
-
-button {
-  background: var(--accent);
-  color: white;
-  border: none;
-  padding: 0.8rem 1.4rem;
-  border-radius: 10px;
-  margin: 0 0.5rem;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background 0.3s ease;
-}
-
-button:hover {
-  background: var(--hover);
-}
-
-/* ==== Product Grid ==== */
-#productGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
-  padding: 3rem 2rem;
-  max-width: 1200px;
-  margin: auto;
-}
-
-.product {
-  background: #1a1a1a;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1.5rem;
-  text-align: center;
-  box-shadow: 0 0 12px rgba(255, 47, 47, 0.15);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.product:hover {
-  transform: scale(1.03);
-  box-shadow: 0 0 24px rgba(255, 47, 47, 0.4);
-}
-
-.product img {
-  max-width: 100%;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-}
-
-.product h3 {
-  font-size: 1.4rem;
-  margin: 0.5rem 0;
-}
-
-.product p {
-  color: #aaa;
-  font-size: 0.95rem;
-  min-height: 60px;
-}
-
-.product span {
-  display: block;
-  margin-top: 1rem;
-  font-size: 1.2rem;
-  color: var(--accent);
-  font-weight: bold;
-}
-
-/* ==== Branding Animation ==== */
 @keyframes pulseRed {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
-}
-
-.arza-gradient {
-  display: inline-block;
-  background: linear-gradient(270deg, #d62828, #e63946, #a4161a, #f94144);
-  background-size: 600% 600%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: pulseRed 6s ease infinite;
-  font-weight: 900;
-  text-shadow: 1px 1px 2px #300000;
 }
