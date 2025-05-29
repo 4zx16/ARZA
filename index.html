@@ -8,6 +8,163 @@
   <meta name="description" content="Discover high-performance desktops and laptops engineered for gamers, developers, and creators. Built with premium components, no compromises." />
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" type="image/x-icon" href="logo.png" />
+<style>
+  :root {
+    --bg: #0b0b0b;
+    --text: #f5f5f5;
+    --muted: #999;
+    --accent: #e50914;
+    --hover: #ff3c3c;
+    --border: #222;
+    --btn-bg: #e50914;
+    --btn-hover: #ff1a1a;
+    --font: 'Segoe UI', 'Roboto', sans-serif;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+  }
+
+  header.site-header {
+    background: #111;
+    border-bottom: 1px solid var(--border);
+    padding: 1.5rem 0;
+  }
+
+  .logo {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-shadow: 0 0 5px var(--hover);
+  }
+
+  nav.main-nav {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: flex-end;
+    margin-top: -2rem;
+  }
+
+  nav.main-nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+  }
+
+  nav.main-nav a:hover,
+  nav.main-nav a.active {
+    color: var(--accent);
+  }
+
+  .hero {
+    text-align: center;
+    padding: 6rem 2rem;
+    background: linear-gradient(145deg, #0b0b0b 60%, #1a1a1a);
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    color: #fff;
+  }
+
+  .hero .tagline {
+    font-size: 1.2rem;
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+
+  .primary-btn {
+    background: var(--btn-bg);
+    color: white;
+    padding: 0.9rem 2rem;
+    border-radius: 6px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background 0.3s ease;
+  }
+
+  .primary-btn:hover {
+    background: var(--btn-hover);
+  }
+
+  .features {
+    background: #111;
+    padding: 4rem 2rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .features .container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: space-between;
+    text-align: center;
+  }
+
+  .feature {
+    flex: 1 1 250px;
+    background: #191919;
+    padding: 2rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    transition: transform 0.2s ease;
+  }
+
+  .feature:hover {
+    transform: scale(1.03);
+    border-color: var(--accent);
+  }
+
+  .feature h2 {
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  footer {
+    background: #0a0a0a;
+    color: var(--muted);
+    text-align: center;
+    padding: 2rem 1rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.9rem;
+  }
+
+  .footer-links a {
+    color: var(--muted);
+    margin: 0 0.5rem;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .footer-links a:hover {
+    color: var(--accent);
+  }
+
+  @media screen and (max-width: 768px) {
+    .features .container {
+      flex-direction: column;
+    }
+
+    nav.main-nav {
+      justify-content: center;
+      margin-top: 1rem;
+    }
+  }
+</style>
 </head>
 <body>
   <header class="site-header">
