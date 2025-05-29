@@ -6,6 +6,139 @@
   <title>ARZA Shop | Elite Desktops & Laptops</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" type="image/x-icon" href="logo.png">
+  <style>
+    body {
+      background: #0e0e0e;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    header, footer {
+      background: #121212;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #2c2c2c;
+    }
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #ff2f2f;
+    }
+
+    nav a {
+      margin-left: 1.2rem;
+      text-decoration: none;
+      color: #ccc;
+    }
+
+    nav a.active, nav a:hover {
+      color: #ff4747;
+    }
+
+    .page-hero {
+      text-align: center;
+      padding: 4rem 2rem 2rem;
+    }
+
+    .page-hero h1 {
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
+    }
+
+    #quizWrapper {
+      background: #181818;
+      padding: 2rem;
+      margin: 2rem auto;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 800px;
+      box-shadow: 0 0 20px rgba(255, 47, 47, 0.2);
+    }
+
+    .question {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    select {
+      width: 100%;
+      padding: 0.8rem;
+      background: #0e0e0e;
+      color: #fff;
+      border: 1px solid #2c2c2c;
+      border-radius: 8px;
+    }
+
+    #filterButtons {
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+
+    button {
+      background: #ff2f2f;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.4rem;
+      border-radius: 10px;
+      margin: 0 0.5rem;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    #productGrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      padding: 3rem 2rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .product {
+      background: #1a1a1a;
+      padding: 1.5rem;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 0 12px rgba(255, 47, 47, 0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .product:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 24px rgba(255, 47, 47, 0.4);
+    }
+
+    .product img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .product h3 {
+      font-size: 1.4rem;
+      margin: 0.5rem 0;
+    }
+
+    .product p {
+      color: #aaa;
+      font-size: 0.95rem;
+      min-height: 60px;
+    }
+
+    .product span {
+      display: block;
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      color: #ff4747;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -18,13 +151,11 @@
       <a href="about.html">About</a>
     </nav>
   </header>
-
   <section class="page-hero">
     <h1>Find Your Perfect Rig</h1>
     <p>Take the quiz below to filter ARZA systems by power, portability, and price.</p>
     <button id="quizToggle">Toggle Quiz</button>
   </section>
-
   <section id="quizWrapper">
     <form id="pcFilterForm">
       <div class="question">
@@ -53,12 +184,10 @@
       <button id="clearFilters" type="button">Clear Filters</button>
     </div>
   </section>
-
   <section class="product-grid" id="productGrid"></section>
-
   <script src="product.js"></script>
   <script>
- const quizToggle = document.getElementById('quizToggle');
+const quizToggle = document.getElementById('quizToggle');
 const quizWrapper = document.getElementById('quizWrapper');
 const applyBtn = document.getElementById('applyFilters');
 const clearBtn = document.getElementById('clearFilters');
@@ -90,7 +219,6 @@ document.addEventListener('DOMContentLoaded', () => {
       productGrid.innerHTML = `<p style="color:#ff4747; text-align:center;">Error loading products. Try again later.</p>`;
     });
 });
-
 function renderProducts(products) {
   productGrid.innerHTML = '';
   products.forEach(product => {
@@ -108,27 +236,22 @@ function renderProducts(products) {
     productGrid.appendChild(card);
   });
 }
-
 applyBtn.addEventListener('click', () => {
   const form = document.forms['pcFilterForm'];
   const use = form['use_case'].value;
   const portability = form['portability'].value;
   const targetTier = useCaseToTier[use];
-
   const filtered = Object.values(allProducts).filter(p => {
     const matchesTier = !use || p.tier === targetTier;
     const matchesType = !portability || p.type === portability;
     return matchesTier && matchesType;
   });
-
   renderProducts(filtered);
 });
-
 clearBtn.addEventListener('click', () => {
   document.getElementById('pcFilterForm').reset();
   renderProducts(Object.values(allProducts));
 });
-
 quizToggle.addEventListener('click', () => {
   quizWrapper.classList.toggle('collapsed');
 });
