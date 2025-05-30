@@ -10,12 +10,12 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(products => {
       if (!id || !products[id]) {
         document.getElementById('productDetails').innerHTML = `<p style="color:#ff4747; font-weight:700; text-align:center;">Product not found. Please check the link.</p>`;
-        document.title = "ARZA Shop | Product Not Found";
+        document.title = "ARZA™ | Product Not Found";
         return;
       }
 
       const product = products[id];
-      document.title = `ARZA Shop | ${product.name}`;
+      document.title = `ARZA™ | ${product.name}`;
 
       const html = `
         <div class="product-header">
